@@ -2,27 +2,28 @@
 <html>
 
 <head>
-	<title>Konrad Dudek</title>
+	<title>Pocket Home</title>
 	<meta charset="UTF-8">
-	<meta name="author" content="Konrad Dudek">
+	<meta name="author" content="Konrad Dudek and Łukasz Maruszak">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 <link rel="stylesheet" href="style.css">
 
 <body>
-
 	<!-- Header -->
 	<div class="header">
-		<h1>Konrad Dudek</h1>
-		<p>Strona <b>Konrada</b> Dudka</p>
+		<h1>Pocket Home</h1>
+		<p><i>Witaj w domu!</i></p>
 	</div>
 
 	<!-- Navigation Bar -->
 	<div class="navbar">
 		<ul id="menu">
-			<li><a href="index.html" style="border: darkgreen solid 3px;" title="Strona">Strona główna</a></li>
-			<li><a href="projekt1.html" title="Projekt numer 1">Projekt 1</a></li>
-			<li><a href="projekt2.html" title="Projekt numer 2">Projekt 2</a></li>
-			<li><a href="projekt3.html" title="Projekt numer 3">Projekt 3</a></li>
+			<li><a href="index.html" style="border: lightblue solid 3px;" title="Dodaj urządzenie">Dodaj urządzenie</a>
+			</li>
+			<li><a href="" title="Projekt numer 1">Grupuj</a></li>
+			<li><a href="" title="Projekt numer 2">Usuń grupę</a></li>
 			<li><a href="kontakt.html" title="Kontakt">Kontakt</a></li>
 		</ul>
 	</div>
@@ -30,16 +31,89 @@
 	<div class="row">
 
 		<!--MAIN-->
-		<div class="content">
-			<span>Strona została stworzona na potrzeby zajęć z Technik WWW. Będą na niej umieszczane wszystkie projekty
-				zaliczeniowe.</span>
+		<div class="devices">
+			<div class="device">
+				<h2>Lampka Nocna</h2>
+
+				<i class='far fa-lightbulb' style='font-size:48px'></i>
+				
+					<!-- Rounded switch -->
+					<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+ 					</label>
+
+			</div>
+
+			<div class="device">
+				<h2>Lampka Nocna</h2>
+
+				<!--Ikona lampki-->
+				<i class='far fa-lightbulb' style='font-size:48px'></i>
+
+				<!-- Rounded switch -->
+				<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+				 </label>
+				 
+			</div>
+
+			<div class="device">
+				<h2>TV w salonie</h2>
+
+				<!--Ikona TV-->
+				<i class='fas fa-tv' style='font-size:48px'></i>
+				
+				<!-- Rounded switch -->
+				<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+				</label>
+			</div>
+
+			<div class="device">
+				<h2>Kino domowe</h2>
+
+				<!--Ikony kina domowego-->
+				<i class='fas fa-play' style='font-size:48px'></i>
+				
+					<!-- Rounded switch -->
+					<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+ 					</label>
+			</div>
+
 		</div>
 
+		<!--Sidebar-->
+		<div class="sidebar">
+			<!--Sceny-->
+			<div class="sceny">
+				<fieldset>
+					<legend>Sceny</legend>
+					<div class="sceny_in">
+						<h2>Brak dodanych scen</h2>
+					</div>
+				  </fieldset>
+			</div>
+			<!--Domownicy-->
+			<div class="domownicy">
+				<fieldset>
+					<legend>Domownicy</legend>
+					<div class="domownicy_in">
+						<h2>Domownicy</h2>
+					</div>
+				  </fieldset>
+			</div>
+		</div>
 	</div>
 
 	<!-- Footer -->
 	<div class="footer">
-		<span>Konrad Dudek &copy 2020</span>
+		<span>Konrad Dudek and Łukasz Maruszak &copy 2020</span>
+	</div>
 	</div>
 
 </body>
