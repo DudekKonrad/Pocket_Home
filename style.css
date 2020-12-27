@@ -20,14 +20,16 @@ button {
 }
 
 .header {
+  height: 100%;
   padding: 1%;
   text-align: center;
   color: white;
   background-color: blue;
-  font-size: 150%;
+  font-size: 100%;
 }
 
 .header h1 {
+  text-align: center;
   text-shadow: black 3px 3px 10px;
 }
 
@@ -38,13 +40,7 @@ button {
   border-bottom: white 2px solid;
 }
 
-form.example input[type=text] {
-  font-size: 120%;
-  align-self: center;
-  width: 80%;
-}
-
-.sceny_in button:hover{
+.sceny_in button:hover {
   color: #2196F3;
 }
 
@@ -79,6 +75,7 @@ form.example input[type=text] {
 }
 
 .row {
+  height: auto;
   display: flex;
   flex-wrap: wrap;
 }
@@ -118,42 +115,55 @@ legend {
 }
 
 .devices {
+  overflow-y: scroll;
+  max-height: 64vh;
   display: flex;
   flex-wrap: wrap;
   flex: 60%;
-  padding: 1%;
-  background-color: lightblue;
+  background-color: lightgray;
+}
+
+.devices .far {
+  font-size: 310%;
+}
+
+.devices .fas {
+  font-size: 300%;
 }
 
 .device {
   position: relative;
   margin: 1%;
   padding: 2%;
-  border: 2px green solid;
+  border: 2px #333 solid;
 }
 
-.device #device_more:hover{
+.device h2 {
+  text-align: center;
+}
+
+
+.device #more_button:hover {
   transition: 0.5s;
   color: blue;
   margin-right: 5px;
+  cursor: pointer;
 }
 
-
-.device #device_more {
+.device #more_button {
   position: absolute;
-  bottom: 1%;
-  right: 1%;
+  bottom: 1.5%;
+  right: 0.5%;
   font-size: 36px;
-  transition: 0.7s;
 }
 
-.device #more_button{
+.device_more {
   display: none;
+  transition: 2s;
 }
 
-.moreOptions {
-  display: none;
-  transition: 0.7s;
+.device_more #slider {
+  align-items: center;
 }
 
 #kontakt_list ul {
@@ -188,6 +198,28 @@ legend {
   border-top: white 2px solid;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: blue;
+  border-radius: 10px;
+  border: darkblue solid 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: darkblue;
+}
 
 /* The switch - the box around the slider */
 .switch {
@@ -199,9 +231,7 @@ legend {
 
 /* Hide default HTML checkbox */
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  display: none;
 }
 
 /* The slider */
@@ -212,7 +242,7 @@ legend {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: grey;
+  background-color: gray;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -229,15 +259,16 @@ legend {
   transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
+input:checked+.slider {
+  /*background-color: #2196F3;*/
+  background-color: green;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -256,7 +287,8 @@ input:checked + .slider:before {
   .row {
     flex-direction: column;
   }
-  .sidebar{
+
+  .sidebar {
     width: 100%;
     flex: 100%;
   }

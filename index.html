@@ -24,78 +24,94 @@
 			<li><a href="index.html" style="border: lightblue solid 3px;" title="Dodaj urządzenie">Dodaj urządzenie</a>
 			</li>
 			<li><a href="" title="Projekt numer 1">Grupuj</a></li>
-			<li><a href="kontakt.html" title="Kontakt">Kontakt</a></li>
 		</ul>
 	</div>
 
 	<div class="row">
 
 		<!--MAIN-->
-		<div class="devices">
+		<div id="devices" class="devices">
 
 
 			<div class="device">
 				<h2>Lampka Nocna</h2>
-				<label class='far fa-lightbulb' style='font-size:48px' for=""></i>
-				
-					<!-- Rounded switch -->
-					<label class="switch">
+				<i id='bulb' class='far fa-lightbulb'></i>
+
+				<!-- Rounded switch -->
+				<label class="switch">
 					<input type="checkbox">
 					<span class="slider round"></span>
- 					</label>
-					<i id="device_more" class="fas fa-angle-double-right" onclick="openTab('lampka_nocna')"></i>
-					<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
-					<div id="lampka_nocna" class="moreOptions">
-						<!-- Zamykanie rozwinięcia -->
-						<i id="device_more" class='fas fa-angle-double-left' onclick="closeTab('lampka_nocna')"></i>
-						<p>Tekst</p>
-					</div>
+				</label>
+				<i id="more_button" class="fas fa-angle-double-right" onclick="openTab('settings1')"></i>
+
+				<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
+				<div class="device_more" id="settings1">
+					<!-- Zamykanie rozwinięcia -->
+					<i id="more_button" class='fas fa-angle-double-left' onclick="closeTab('settings1')"></i>
+					<!--Ustawienia-->
+					<input id="slider" type="range">
+				</div>
 			</div>
 
 			<div class="device">
 				<h2>Oświetlenie w łazience</h2>
 
-				<!--Ikona lampki-->
-				<i class='far fa-lightbulb' style='font-size:48px'></i>
+				<i class='far fa-lightbulb'></i>
 
 				<!-- Rounded switch -->
 				<label class="switch">
-				<input type="checkbox">
-				<span class="slider round"></span>
-				 </label>
-				 <i id="device_more" class='fas fa-angle-double-right' style='font-size:36px'></i>
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+				<i id="more_button" class="fas fa-angle-double-right" onclick="openTab('settings2')"></i>
 
+				<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
+				<div class="device_more" id="settings2">
+					<!-- Zamykanie rozwinięcia -->
+					<i id="more_button" class='fas fa-angle-double-left' onclick="closeTab('settings2')"></i>
+					<p>Tekst</p>
+				</div>
 			</div>
 
 			<div class="device">
-				<span></span>
-    			<span></span>
-    			<span></span>
-    			<span></span>
 				<h2>TV w salonie</h2>
 
 				<!--Ikona TV-->
-				<i class='fas fa-tv' style='font-size:48px'></i>
-				
+				<i class='fas fa-tv'></i>
+
 				<!-- Rounded switch -->
 				<label class="switch">
-				<input type="checkbox">
-				<span class="slider round"></span>
+					<input type="checkbox">
+					<span class="slider round"></span>
 				</label>
-				<i id="device_more" class='fas fa-angle-double-right' style='font-size:36px'></i>
+				<i id="more_button" class="fas fa-angle-double-right" onclick="openTab('settings3')"></i>
+
+				<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
+				<div class="device_more" id="settings3">
+					<!-- Zamykanie rozwinięcia -->
+					<i id="more_button" class='fas fa-angle-double-left' onclick="closeTab('settings3')"></i>
+					<p>Tekst</p>
+				</div>
 			</div>
 
 			<div class="device">
 				<h2>Kino domowe</h2>
 
 				<!--Ikony kina domowego-->
-				<i class='fas fa-play' style='font-size:48px'></i>
-					<!-- Rounded switch -->
-					<label class="switch">
+				<i class='fas fa-play'></i>
+				<!-- Rounded switch -->
+				<label class="switch">
 					<input type="checkbox">
 					<span class="slider round"></span>
-					 </label>
-					 <i id="device_more" class='fas fa-angle-double-right' style='font-size:36px'></i>
+				</label>
+				<i id="more_button" class="fas fa-angle-double-right" onclick="openTab('settings2')"></i>
+
+				<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
+				<div class="device_more" id="settings2">
+					<!-- Zamykanie rozwinięcia -->
+					<i id="more_button" class='fas fa-angle-double-left' onclick="closeTab('settings2')"></i>
+					<p>Tekst</p>
+				</div>
 			</div>
 
 		</div>
@@ -110,7 +126,7 @@
 						<h2>Brak dodanych scen</h2>
 						<button type="button">Dodaj scenę</button>
 					</div>
-				  </fieldset>
+				</fieldset>
 			</div>
 			<!--Domownicy-->
 			<div class="domownicy">
@@ -119,7 +135,7 @@
 					<div class="domownicy_in">
 						<h2>Brak dodanych domowników</h2>
 					</div>
-				  </fieldset>
+				</fieldset>
 			</div>
 		</div>
 	</div>
