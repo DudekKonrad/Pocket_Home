@@ -44,17 +44,13 @@ form.example input[type=text] {
   width: 80%;
 }
 
-/* Style the submit button */
-form.example button {
-  float: left;
-  padding: 10px;
-  background: #2196F3;
-  color: white;
-  font-size: 60%;
+.sceny_in button:hover{
+  color: #2196F3;
 }
 
-form.example button:hover {
-  background: #0b7dda;
+.sceny_in button {
+  float: right;
+  font-size: 110%;
 }
 
 #menu {
@@ -131,15 +127,10 @@ legend {
 
 .device {
   position: relative;
-  margin-bottom: 2%;
-  margin-right: 2%;
-  min-width: 10%;
-  min-height: 10%;
-  border: black 2px solid;
+  margin: 1%;
   padding: 2%;
-  display: inline-block;
+  border: 2px green solid;
 }
-
 
 .device #device_more:hover{
   transition: 0.5s;
@@ -150,10 +141,14 @@ legend {
 
 .device #device_more {
   position: absolute;
-  bottom: 8px;
-  right: 16px;
+  bottom: 1%;
+  right: 1%;
   font-size: 36px;
   transition: 0.7s;
+}
+
+.device #more_button{
+  display: none;
 }
 
 .moreOptions {

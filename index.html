@@ -24,7 +24,6 @@
 			<li><a href="index.html" style="border: lightblue solid 3px;" title="Dodaj urządzenie">Dodaj urządzenie</a>
 			</li>
 			<li><a href="" title="Projekt numer 1">Grupuj</a></li>
-			<li><a href="" title="Projekt numer 2">Usuń grupę</a></li>
 			<li><a href="kontakt.html" title="Kontakt">Kontakt</a></li>
 		</ul>
 	</div>
@@ -34,22 +33,21 @@
 		<!--MAIN-->
 		<div class="devices">
 
+
 			<div class="device">
 				<h2>Lampka Nocna</h2>
-
-				<i class='far fa-lightbulb' style='font-size:48px'></i>
+				<label class='far fa-lightbulb' style='font-size:48px' for=""></i>
 				
 					<!-- Rounded switch -->
 					<label class="switch">
 					<input type="checkbox">
 					<span class="slider round"></span>
  					</label>
-					<i id="device_more" class='fas fa-angle-double-right' onclick="openTab('lampka_nocna');"></i>
-					
+					<i id="device_more" class="fas fa-angle-double-right" onclick="openTab('lampka_nocna')"></i>
 					<!-- Menu z większą ilością opcji urządzenia (domyślnie ukryte) -->
 					<div id="lampka_nocna" class="moreOptions">
 						<!-- Zamykanie rozwinięcia -->
-						<i id="device_more" class='fas fa-angle-double-left' onclick="this.parentElement.style.display='none'"></i>
+						<i id="device_more" class='fas fa-angle-double-left' onclick="closeTab('lampka_nocna')"></i>
 						<p>Tekst</p>
 					</div>
 			</div>
@@ -70,6 +68,10 @@
 			</div>
 
 			<div class="device">
+				<span></span>
+    			<span></span>
+    			<span></span>
+    			<span></span>
 				<h2>TV w salonie</h2>
 
 				<!--Ikona TV-->
@@ -106,6 +108,7 @@
 					<legend>Sceny</legend>
 					<div class="sceny_in">
 						<h2>Brak dodanych scen</h2>
+						<button type="button">Dodaj scenę</button>
 					</div>
 				  </fieldset>
 			</div>
