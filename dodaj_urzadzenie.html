@@ -11,43 +11,53 @@
 </head>
 <link rel="stylesheet" href="style.css">
 
-<body onload="refreshDevices()">
+<body>
 	<!-- Header -->
 	<div class="header">
-		<img src="img/logo.png">
+		<h1>Pocket Home</h1>
+		<p><i>Witaj w domu!</i></p>
 	</div>
 
 	<!-- Navigation Bar -->
 	<div class="navbar">
 		<ul id="menu">
-			<li><a href="index.html" title="Main" style="border-color: blue;"> Main</a></li>
-			<li><a href="dodaj_urzadzenie.html" title="Dodaj urządzenie">Dodaj urządzenie</a></li>
-			<li><a href="grupa.html" title="Grupuj">Grupuj</a></li>
+			<li><a href="index.html" title="Main"> Main</a></li>
+			<li><a href="dodaj_urzadzenie.html" title="Dodaj urządzenie" style="border-color: blue;">Dodaj urządzenie</a></li>
+			<li><a href="grupa.html" title="Projekt numer 1">Grupuj</a></li>
 		</ul>
 	</div>
 
 	<div class="row">
+
 		<!--MAIN-->
+		<div id="adding" class="adding">
+			<label>Nazwa urządzenia: </label>
+			<input type="text" id="device_name" name="device_name">
+			<p id='name_valid'></p>
+			<br>
+			<label>Kod urządzenia: </label>
+			<input type="text" id="device_code" name="device_code">
+			<p id='code_valid'></p>
+			<br>
+			<button onclick="addDevice(device_name.value, device_code.value)">Dodaj</button>
 
-		<div id="devices" class="devices">
+			<div id="devices" class="devices">
 
-
+			</div>
 		</div>
 
 		<!--Sidebar-->
 		<div class="sidebar">
-
 			<!--Sceny-->
 			<div class="sceny">
 				<fieldset>
 					<legend>Sceny</legend>
 					<div class="sceny_in">
 						<h2>Brak dodanych scen</h2>
-						<button onclick="document.location='sceny.html'" type="button">Dodaj scenę</button>
+						<button type="button">Dodaj scenę</button>
 					</div>
 				</fieldset>
 			</div>
-
 			<!--Domownicy-->
 			<div class="domownicy">
 				<fieldset>
