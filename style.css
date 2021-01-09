@@ -39,9 +39,46 @@ button {
   height: 25%;
 }
 
+.navigation-bar {
+  width: 100%; /* i'm assuming full width */
+  height: 120px; /* change it to desired width */
+}
+
+.logo {
+  margin-top: 13px;
+  margin-right: 10px;
+  float: right;
+  width: 384px;
+  height: 88px;
+}
+
+.navigation-bar ul {
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.navigation-bar li {
+  list-style-type: none;
+  display: inline;
+}
+
+.navigation-bar li a {
+  color: black;
+  font-size: 48px;
+  text-decoration: none;
+  line-height: 100px;
+  font-weight: 800;
+}
+
+
 .navbar {
+  z-index: 9000;
+  background-color: white;
+  top: 0;
+  position: sticky;
   display: flex;
-  font-size: 120%;
+  font-size: 20px;
   border-top: black 2px solid;
   border-bottom: black 2px solid;
   height: 100px;
@@ -49,7 +86,7 @@ button {
 
 #menu {
   display: inline-flex;
-  margin: auto;
+  margin-right: 50%;
 }
 
 #menu li {
@@ -62,7 +99,6 @@ button {
 #menu a {
   color: black;
   border: 3px solid gray;
-  padding: 8px;
   text-decoration: none;
 }
 
@@ -72,7 +108,6 @@ button {
 
 .row {
   flex-direction: row;
-  height: 65vh;
   display: flex;
   flex-wrap: wrap;
 }
@@ -115,8 +150,6 @@ legend {
 }
 
 .devices {
-  overflow-y: scroll;
-  max-height: 62vh;
   min-width: 60%;
   display: flex;
   flex-wrap: wrap;
@@ -592,4 +625,159 @@ input:checked+.slider:before {
   .device {
     min-width: 48%;
   }
+}
+
+/*style sceny*/
+.scena {
+  height: 160px;
+  color: black;
+  background: whitesmoke;
+  padding: 5px 0 20px 10px;
+  border:1px solid black;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.scena .far {
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.scena .icon {
+  width: 100%;
+}
+.scena .toggle {
+  float: right;
+  margin-top: 8px;
+  margin-right: 20px;
+}
+
+.scena .toggle {
+  float: right;
+  margin-top: 8px;
+  margin-right: 20px;
+}
+
+.scena .days {
+  margin-top: 18px;
+  margin-right: 20px;
+}
+
+.delete_buttons {
+  text-align: center;
+
+}
+
+.delete_buttons button {
+  font-size: 18px;
+  padding: 5px 10px;
+  margin-right: 20px;
+}
+
+
+#domownik1 {
+  background-image: url("images/boy.png");
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: top center;
+  background-color: whitesmoke;
+
+  border-radius: 50%;
+}
+
+#domownik2{
+  background-image: url("images/designer.png");
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: top center;
+  background-color: whitesmoke;
+
+  border-radius: 50%;
+}
+
+#domownik3{
+  background-image: url("images/man.png");
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: top center;
+  background-color: whitesmoke;
+
+  border-radius: 50%;
+}
+
+#domownik4{
+  background-image: url("images/woman.png");
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  background-position: top center;
+  background-color: whitesmoke;
+
+  border-radius: 50%;
+}
+figcaption {
+  text-align: center;
+  width: 100px;
+  padding: 0;
+  margin: 0;
+}
+#dom1 {
+  display: block;
+}
+.dom{
+  display: none;
+  position: relative;
+  width: 100px;
+  margin-right: 8px;
+  float: left;
+}
+
+.domownicy .fa-plus {
+  font-size: 40px;
+  cursor: pointer;
+  line-height: 100px;
+  margin-left: 10px;
+}
+
+.overlay {
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  width: 100px;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #62a4c6;
+  cursor: pointer;
+}
+
+.dom:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: #000000;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+#brak_domownikow{
+  display: none;
+}
+
+.scena-dziala{
+  border:5px solid #42ea00;
+  color: #42ea00;
 }
