@@ -1,5 +1,3 @@
-
-
 var d1 = {
 	"name": "Lampka Nocna",
 	"code": "1111",
@@ -62,7 +60,7 @@ function addDevice(name, code) {
 		document.getElementById('device_name').style.borderColor = 'red';
 	} else if (!names.includes(name) && (codes.includes(code)) && name.length != 0 && name.length <= 15) {
 		names.push(name);
-		sessionStorage.names += name +',';
+		sessionStorage.names += name + ',';
 		var temp = {
 			"name": name,
 			"code": code
@@ -74,7 +72,7 @@ function addDevice(name, code) {
 		var position = len - 1;
 		var output = [sessionStorage.AllDevices.slice(0, position), b, sessionStorage.AllDevices.slice(position)].join('');
 		sessionStorage.setItem("AllDevices", output);
-		JSalert();
+		JSalert(name);
 	}
 }
 
@@ -128,7 +126,7 @@ function addDevice2(name, code) {
 
 			'<i id=\"' + name + 'more_button\"' + 'class="fas fa-angle-double-right" onclick="openTab(\'settings_' + name + '\')"></i>' +
 			'<div class="device_more" id="settings_' + name + '\">' +
-			'<i class=\'far fa-trash-alt\' onclick="deleteDevice(\'' + name + '\')"></i>' +
+			'<i class=\'far fa-trash-alt\' onclick= "JSalertDelete(\'' + name + '\')"></i>' +
 			'<i id=\"' + name + 'less_button\"' + 'class=\'fas fa-angle-double-left\' onclick="closeTab(\'settings_' + name + '\')"></i>' +
 
 			'<div class="temperature">' +
@@ -180,7 +178,7 @@ function addDevice2(name, code) {
 		document.getElementById('devices').innerHTML += `
 		<div class="device" id="glosnik">
             <div>
-                <h2>` + name +`
+                <h2>` + name + `
                     <i class='far fa-trash-alt' onclick="deleteDevice('glosnik')"></i>
                 </h2>
             </div>
@@ -238,7 +236,7 @@ function refreshNames() {
 	var res = str.split(",");
 	document.getElementById('myDropdown').innerHTML = "";
 	for (var i in res) {
-		document.getElementById('myDropdown').innerHTML += '<a href="#' + res[i] +'" onclick="openTab(\'settings_' + res[i] + '\')">' + res[i] + '</a>'
+		document.getElementById('myDropdown').innerHTML += '<a href="#' + res[i] + '" onclick="openTab(\'settings_' + res[i] + '\')">' + res[i] + '</a>'
 	}
 }
 
@@ -689,9 +687,27 @@ document.addEventListener('DOMContentLoaded', function (event) {
 })
 
 
-// CommonJS
-const swal = require('sweetalert2')
+function JSalert(name) {
+	swal("Gratulacje! Dodano:" + name + "", "", "success");
+}
 
-function JSalert(){
-	swal("Congrats!", ", Your account is created!", "success");
+function JSalertDelete(id) {
+	swal({
+			title: "Jesteś pewny?",
+			text: "Nie będzie można przywrócić usuniętego urządzenia!",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				swal("Brawo! Urządzenie " + id + " zostało usunięte!", {
+					icon: "success",
+				});
+				deleteDevice(id)
+			} 
+			else {
+				swal("Oj! Urządzenie " + id + " nie zostało usunięte!");
+			}
+		});
 }
