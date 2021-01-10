@@ -33,13 +33,15 @@
 			<input type="text" placeholder="Wpisz nazwę urządzenia..." id="myInput" onkeyup="filterFunction()"
 				onfocus="myFunction()" onfocusout="myFunction2()">
 			<div id="myDropdown" class="dropdown-content">
+				<!--<button href="#Lampka Nocna" onclick="openTab('settings_Lampka Nocna')">TEst</button>-->
 			</div>
 		</div>
 
 		<ul id="menu">
 			<li><span onclick="transitionToPage('index.html')" style="border-color: blue;">Urządzenia</span></li>
 			<li><span onclick="transitionToPage('dodaj_urzadzenie.html')">Dodaj urządzenie</span></li>
-			<li><span onclick="transitionToPage('grupa.html.html')">Grupuj</span></li>
+			<li><span onclick="transitionToPage('grupa.html')">Grupuj</span></li>
+			<li><span onclick="deleteGroup()" title="Grupuj">Usuń grupę</span></li>
 		</ul>
 	</div>
 

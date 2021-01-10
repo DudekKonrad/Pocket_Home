@@ -1,21 +1,29 @@
 var d1 = {
 	"name": "Lampka Nocna",
 	"code": "1111",
+	"settings": "settings_Lampka Nocna"
 }
 var d2 = {
-	"name": "Klimatyzacja",
+	"name": "Lampka Nocna",
 	"code": "2222",
-	"settings" : "settings_Klimatyzacja"
+	"settings": "settings_Klimatyzacja"
 }
 
 var d3 = {
-	"name": "Głośnik w salonie",
-	"code": "3333",
+	"name": "Oświetlenie w łazience",
+	"code": "2222",
+	"settings": "settings_Klimatyzacja2"
 }
 
-var codes = ['1111', '2222', '3333'];
-var names = ["Lampka Nocna", "Klimatyzacja", "Głośnik w salonie"];
-var AllDevices = [d1, d2, d3];
+var d4 = {
+	"name": "Klimatyzacja3",
+	"code": "2222",
+	"settings": "settings_Klimatyzacja3"
+}
+
+var codes = ['1111', '2222'];
+var names = ["Lampka Nocna", "Lampka Nocna", "Oświetlenie w łazience", "Klimatyzacja"];
+var AllDevices = [d1, d2, d3, d4];
 
 
 if (!sessionStorage.isActive) {
@@ -35,8 +43,8 @@ function addDevice(name, code) {
 	document.getElementById('name_valid').innerHTML = "";
 	document.getElementById('device_code').style.borderColor = 'gray';
 	document.getElementById('code_valid').innerHTML = "";
-	if (name.length > 20) {
-		document.getElementById('name_valid').innerHTML = "Nazwa może mieć tylko 20 znaków";
+	if (name.length >= 20) {
+		document.getElementById('name_valid').innerHTML = "Nazwa może mieć tylko 5 znaków";
 		document.getElementById('device_name').style.borderColor = 'red';
 	}
 	if (name.length == 0) {
@@ -47,30 +55,23 @@ function addDevice(name, code) {
 		document.getElementById('code_valid').innerHTML = "Niepoprawny kod!";
 		document.getElementById('device_code').style.borderColor = 'red';
 	}
-	var Devices = JSON.parse(sessionStorage.getItem("AllDevices"));
-	for (var i in Devices){
-		names.push(Devices[i].name);
-	}
 	if (names.includes(name)) {
-		document.getElementById('name_valid').innerHTML = "Nazwa już istnieje!";
+		document.getElementById('name_valid').innerHTML = "taka nazwa już istnieje!";
 		document.getElementById('device_name').style.borderColor = 'red';
-	} else if (!names.includes(name) && (codes.includes(code)) && name.length != 0 && name.length <= 20) {
-		
+	} else if (!names.includes(name) && (codes.includes(code)) && name.length != 0 && name.length < 20) {
+		names.push(name);
+		sessionStorage.names += ',' + name;
 		var temp = {
 			"name": name,
 			"code": code
 		}
-		AllDevices = JSON.parse(sessionStorage.getItem('AllDevices'));
-		console.log("Before push: " + sessionStorage.getItem("AllDevices"));
-		AllDevices.push(temp);
-		sessionStorage.setItem("AllDevices", JSON.stringify(AllDevices));
 		addDevice2(name, code);
 		//sessionStorage.setItem("AllDevices", JSON.stringify(AllDevices));
-		//var len = sessionStorage.AllDevices.length;
-		//var b = `{"name":"` + temp.name + `","code":"` + temp.code + `"},`;
-		//var position = len - 1;
-		//var output = [sessionStorage.AllDevices.slice(0, position), b, sessionStorage.AllDevices.slice(position)].join('');
-		JSalert(name);
+		var len = sessionStorage.AllDevices.length;
+		var b = ",\n{\"name\":" + "\"" + temp.name + "\"" + ",\"code\":\"" + temp.code + "\"}";
+		var position = len - 1;
+		var output = [sessionStorage.AllDevices.slice(0, position), b, sessionStorage.AllDevices.slice(position)].join('');
+		sessionStorage.setItem("AllDevices", output);
 	}
 }
 
@@ -80,13 +81,13 @@ function addDevice2(name, code) {
 		document.getElementById('devices').innerHTML +=
 			'<div name=\"' + name + '\" + id=\"' + name + '\" class="device">' +
 			'<h2>' + name + '</h2>' +
-			'<div class="turn">' +
+			'<div class="turn">'+
 			'<i id=\'bulb\' class=\'far fa-lightbulb\'></i>' +
 			'<label class=\"switch\">' +
 			'<input type="checkbox">' +
 			'<span class="slider round"></span>' +
 			'</label>' +
-			'</div>' +
+			'</div>'+
 			'<i id=\"' + name + 'more_button\"' + 'class="fas fa-angle-double-right" onclick="openTab(\'settings_' + name + '\')"></i>' +
 			'<div class="device_more" id="settings_' + name + '\">' +
 			'<i class=\'far fa-trash-alt\' onclick="deleteDevice(\'' + name + '\')"></i>' +
@@ -97,23 +98,25 @@ function addDevice2(name, code) {
 			'<input type="range" min="0" max="100" value="50" class="slider_x" id="myRange" oninput="this.nextElementSibling.value=this.value">' +
 			'<output>50</output>' +
 			'<br>' +
+			'Znajduję się w scenach: <select name="akcesoria" id="' + name + '-select" class="ui search selection dropdown">'+
+                '</select>'+
 			'</div>' +
-			'<div class="colors">' +
+			'<div class="content__wrapper">' +
 			'<h2 class="text-color">Kolor światła</h2>' +
 
-			'<input type="radio" name="drone" style="background-color: #42ea00;">' +
-			'<input type="radio" name="drone" style="background-color: #ff5a04;">' +
-			'<input type="radio" name="drone" style="background-color: #001283;">' +
-			'<input type="radio" name="drone" style="background-color: #e70000;">' + //class="active-color"
-			'<input type="radio" name="drone" style="background-color: #ff45fc;">' +
-			'<input type="radio" name="drone" style="background-color: #0d64ff;">' +
-
+			'<ul class="colors">' +
+			'<li data-color="#2ecc71"></li>' +
+			'<li data-color="#D64A4B"></li>' +
+			'<li data-color="#8e44ad"></li>' +
+			'<li data-color="#46a1de"></li>' + //class="active-color"
+			'<li data-color="#bdc3c7"></li>' +
+			'</ul>' +
 			'</div>' +
 			'</div>'
 	}
 
 	if (code == '2222') {
-		document.getElementById('devices').innerHTML +=
+		document.getElementById('grupa').innerHTML +=
 			'<div id=\"' + name + '\" class=\'device\'>' +
 			'<h2>' + name + '</h2>' +
 			'<i id=\'clima\' class=\'fas fa-wind\'></i>' +
@@ -124,10 +127,13 @@ function addDevice2(name, code) {
 
 			'<i id=\"' + name + 'more_button\"' + 'class="fas fa-angle-double-right" onclick="openTab(\'settings_' + name + '\')"></i>' +
 			'<div class="device_more" id="settings_' + name + '\">' +
-			'<i class=\'far fa-trash-alt\' onclick= "JSalertDelete(\'' + name + '\')"></i>' +
+			'<i class=\'far fa-trash-alt\' onclick="deleteDevice(\'' + name + '\')"></i>' +
 			'<i id=\"' + name + 'less_button\"' + 'class=\'fas fa-angle-double-left\' onclick="closeTab(\'settings_' + name + '\')"></i>' +
 
 			'<div class="temperature">' +
+			'<button onclick="decrementValue()"><i class="fas fa-minus"></i></button>' +
+			'<span id="temp">20 &#x2103</span>' +
+			'<button onclick="incrementValue()"><i class="fas fa-plus"></i></button>' +
 			'</div>' +
 
 			'<div class="power">' +
@@ -156,12 +162,12 @@ function addDevice2(name, code) {
 			'<span>Tryb</span>' +
 			'<select name="type" id="type-select" class="ui search selection dropdown">' +
 			'<option value="">Przeglądaj</option>' +
-			'<option value="AUTO">Automatyczna</option>' +
+			'<option value="AUTO">AUTO</option>' +
 			'<option value="chłodzenie">Chłodzenie</option>' +
 			'<option value="wentylator">Wentylator</option>' +
 			'<option value="suche">Osuszanie powietrza</option>' +
-			'<option value="Ogrzewanie">Ogrzewanie</option>' +
-			'<option value="eco">Eco</option>' +
+			'<option value="Ogrzewanie">ogrzewanie</option>' +
+			'<option value="eco">ECO</option>' +
 			'</select>' +
 			'</div>' +
 			'</div>' +
@@ -170,40 +176,51 @@ function addDevice2(name, code) {
 	}
 
 	if (code == '3333') {
-		console.log("Adding speaker.");
-		document.getElementById('devices').innerHTML += addSpeaker(name);
+
 	}
 }
 
+function prepareJSON(json) {
+	//sessionStorage.setItem("AllDevices", JSON.stringify(AllDevices));
+	var len = sessionStorage.AllDevices.length;
+	var b = ",\n{\"name\":" + "\"" + temp.name + "\"" + ",\"code\":\"" + temp.code + "\"}";
+	var position = len - 1;
+	var output = [sessionStorage.AllDevices.slice(0, position), b, sessionStorage.AllDevices.slice(position)].join('');
+	sessionStorage.setItem("AllDevices", output);
+}
 
-
-/*function refreshNames() {
-	console.log("Names: " + sessionStorage.getItem("names"));
+function refreshNames() {
 	var str = sessionStorage.getItem("names");
-	if (str[str.length - 1] == ",") {
-		str = str.slice(0, str.length - 1)
-		console.log("Nazwy po usunieciu przecinka na koncu: " + str);
-	}
 	var res = str.split(",");
 	document.getElementById('myDropdown').innerHTML = "";
 	for (var i in res) {
-		document.getElementById('myDropdown').innerHTML += `<a href="#` + res[i] + `" onclick="openTab('settings_` + res[i] + `')">` + res[i] + `</a>`;
+		console.log("NAME: " + res[i]);
+		document.getElementById('myDropdown').innerHTML += '<a href="#' + res[i] + '\">' + res[i] +'</a>'
+		//<a onclick="openTab('settings_Klimatyzacja')">Opens</a>
+		//<a onclick="openTab('settings_Klimatyzacja')">Klimatyzacja</a>
 	}
-	console.log(document.getElementById('myDropdown').innerHTML);
-}*/
+}
 
 function refreshDevices2() {
-	console.log("AllDevices: " + sessionStorage.getItem("AllDevices"))
 	var data = JSON.parse(sessionStorage.getItem("AllDevices"));
 	for (var i in data) {
 		addDevice2(data[i].name, data[i].code);
 	}
-	//refreshNames();
+	refreshNames();
 }
 
 function refreshDevices() {
-	console.log(sessionStorage.getItem("AllDevices"));
-	var data = JSON.parse(sessionStorage.getItem("AllDevices"));
+	var refreshed = sessionStorage.getItem("AllDevices")
+	console.log("AllDevices: " + refreshed);
+	refreshed = refreshed.replaceAll("}", "},");
+	refreshed = refreshed.replaceAll(",,", ",");
+	console.log("Last: " + refreshed[refreshed.length - 2])
+	if (refreshed[refreshed.length - 2] === ',') {
+		refreshed = refreshed.slice(0, refreshed.length - 2);
+		refreshed += "]";
+	}
+	console.log("Refreshed after replace: " + refreshed)
+	var data = JSON.parse(refreshed);
 	for (var i in data) {
 		addDevice2(data[i].name, data[i].code);
 	}
@@ -216,16 +233,7 @@ function deleteDevice1(id) {
 }
 
 function deleteDevice2(id) {
-	var refreshed = sessionStorage.getItem("AllDevices")
-	console.log("Before parse all devices: " + refreshed);
-	console.log(refreshed[refreshed.length - 2]);
-	if (refreshed[refreshed.length - 2] === ',') {
-		console.log("Cutting");
-		refreshed = refreshed.slice(0, refreshed.length - 2);
-		refreshed += "]";
-		console.log("After cut: " + refreshed);
-	}
-	var json = JSON.parse(refreshed);
+	var json = JSON.parse(sessionStorage.getItem("AllDevices"));
 	for (var i = 0; i < json.length; i++) {
 		if (json[i].name == id) {
 			json.splice(i, 1);
@@ -236,18 +244,8 @@ function deleteDevice2(id) {
 }
 
 function deleteName(id) {
-	var nazwy = sessionStorage.getItem('names');
-	console.log("Names before delete:" + nazwy)
-	nazwy = nazwy.replace(id, "");
-	nazwy = nazwy.replace(",,", ",");
-	if (nazwy[0] == ',') {
-		nazwy = nazwy.slice(1);
-	}
-	if (nazwy[nazwy.length - 1] == ",") {
-		nazwy = nazwy.slice(0, nazwy.length - 1);
-	}
-	console.log("Nazwy final: " + nazwy);
-	sessionStorage.setItem('names', nazwy);
+	var changed = sessionStorage.getItem('names').replace(id + ',', "");
+	sessionStorage.setItem("names", changed);
 }
 
 function deleteDevice(id) {
@@ -258,16 +256,16 @@ function deleteDevice(id) {
 }
 
 function openTab(tabName) {
-	console.log("Will open " + tabName);
+	console.log("Begin: " + tabName);
 	var new_name = tabName.replace('settings_', '');
+	console.log("After replace: " + new_name);
 	document.getElementById(tabName).style.display = "block";
 	var p_width = document.getElementById("devices").offsetWidth;
 	document.getElementById(tabName).style.width = p_width / 1.1 + "px";
 	var p_height = document.getElementById("devices").offsetHeight;
-	document.getElementById(tabName).style.height = "430px";
+	document.getElementById(tabName).style.height = p_height / 2 + "px";
 	document.getElementById(new_name + 'more_button').style.display = "none";
 }
-
 
 function closeTab(tabName) {
 	var new_name = tabName.replace('settings_', '');
@@ -277,16 +275,9 @@ function closeTab(tabName) {
 	document.getElementById(new_name + 'more_button').style.display = "block";
 }
 
-function refreshNames(){
-	var Devices = JSON.parse(sessionStorage.getItem("AllDevices"));
-	document.getElementById('myDropdown').innerHTML = "";
-	for (var i in Devices){
-		var name = Devices[i].name;
-		//document.getElementById('myDropdown').innerHTML += `<a href="${"#" + name}" onclick="openTab('${"settings_" + name}')"> ${name} </a>`;
-		document.getElementById('myDropdown').innerHTML += '<a href="#' + name +'" onclick="openTab(\'settings_' + name + '\')">' + name + '</a>'
-	}
-	console.log(document.getElementById('myDropdown').innerHTML);
-}
+/*
+W jakich scenach jest dane urządzenie,
+*/
 
 /**
  * Kody urządzeń
@@ -298,17 +289,15 @@ function refreshNames(){
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
-	document.getElementById("myDropdown").style.height = "265px";
-	//document.getElementById("myDropdown").style.display = "block";
+	document.getElementById("myDropdown").classList.toggle("show");
 }
 
 function myFunction2() {
-	//document.getElementById("myDropdown").style.display = "none";
-	document.getElementById("myDropdown").style.height = "0px";
+	document.getElementById("myDropdown").classList.toggle("show");
 }
 
 function filterFunction() {
-	var input, filter, a, i;
+	var input, filter, ul, li, a, i;
 	input = document.getElementById("myInput");
 	filter = input.value.toUpperCase();
 	div = document.getElementById("myDropdown");
@@ -323,78 +312,78 @@ function filterFunction() {
 	}
 }
 
-$(document).ready(function () {
-
+$(document).ready(function(){
+	
 	// Variables
 	var clickedTab = $(".tabs > .active");
 	var tabWrapper = $(".tab__content");
 	var activeTab = tabWrapper.find(".active");
 	var activeTabHeight = activeTab.outerHeight();
-
+	
 	// Show tab on page load
 	activeTab.show();
-
+	
 	// Set height of wrapper on page load
 	tabWrapper.height(activeTabHeight);
-
-	$(".tabs > li").on("click", function () {
-
+	
+	$(".tabs > li").on("click", function() {
+		
 		// Remove class from active tab
 		$(".tabs > li").removeClass("active");
-
+		
 		// Add class active to clicked tab
 		$(this).addClass("active");
-
+		
 		// Update clickedTab variable
 		clickedTab = $(".tabs .active");
-
+		
 		// fade out active tab
-		activeTab.fadeOut(250, function () {
-
+		activeTab.fadeOut(250, function() {
+			
 			// Remove active class all tabs
 			$(".tab__content > li").removeClass("active");
-
+			
 			// Get index of clicked tab
 			var clickedTabIndex = clickedTab.index();
 
 			// Add class active to corresponding tab
 			$(".tab__content > li").eq(clickedTabIndex).addClass("active");
-
+			
 			// update new active tab
 			activeTab = $(".tab__content > .active");
-
+			
 			// Update variable
 			activeTabHeight = activeTab.outerHeight();
-
+			
 			// Animate height of wrapper to new tab height
 			tabWrapper.stop().delay(50).animate({
 				height: activeTabHeight
-			}, 500, function () {
-
+			}, 500, function() {
+				
 				// Fade in active tab
 				activeTab.delay(50).fadeIn(250);
-
+				
 			});
 		});
 	});
-
+	
 	// Variables
 	var colorButton = $(".colors li");
-
-	colorButton.on("click", function () {
-
+	
+	colorButton.on("click", function(){
+		
 		// Remove class from currently active button
 		$(".colors > li").removeClass("active-color");
-
+		
 		// Add class active to clicked button
 		$(this).addClass("active-color");
-
+		
 		// Get background color of clicked
 		var newColor = $(this).attr("data-color");
-
+		
 		// Change background of everything with class .bg-color
 		$(".bg-color").css("background-color", newColor);
-
+		
 		// Change color of everything with class .text-color
 		$(".text-color").css("color", newColor);
 	});
@@ -403,7 +392,7 @@ $(document).ready(function () {
 //-------------------------
 
 var scena1 = {
-    type: "day_and_hour",
+    type: "recznie",
     name: "Jestem w pracy",
     timeStart: "08:00",
     timeEnd: "16:00",
@@ -421,7 +410,7 @@ var scena1 = {
     device: ['oswietlenie', 'glosnik']
 };
 var scena2 = {
-    type: "recznie",
+    type: "day_and_hour",
     name: "Impreza",
     timeStart: "20:00",
     timeEnd: "23:00",
@@ -445,7 +434,7 @@ function wzorScenaManually(id, title){
             <h2>${title}</h2>
             <div class="icon">
                 <i class="far fa-edit" onclick="editScena('${title}')"></i>
-                <i class="far fa-trash-alt" onClick="deleteScene('${id}', '${title}')"></i>
+                <i class="far fa-trash-alt" onClick="deleteDevice('${id}', '${title}')"></i>
             </div>
             <div class="toggle">
                 <label class="switch">
@@ -463,7 +452,7 @@ function wzorScenaAuto(id, title, daysandhours){
         <h2>${title}</h2>
         <div class="icon">
             <i class="far fa-edit" onclick="editScena('${title}')"></i>
-            <i class="far fa-trash-alt" onClick="deleteScene('${id}', '${title}')"></i>
+            <i class="far fa-trash-alt" onClick="deleteDevice('${id}', '${title}')"></i>
         </div>
         <div class="days">
             <h3>${daysandhours}</h3>
@@ -524,7 +513,7 @@ function sprawdz_ilosc_scen() {
 }
 
 
-function deleteScene(id, title) {
+function deleteDevice(id, title) {
     if (confirm("Czy chcesz usunąć scenę?")) {
         dodane_sceny--;
         let scena = document.getElementById(id);
@@ -542,13 +531,19 @@ function deleteScene(id, title) {
 
 function deleteGroup() {
     var group = prompt("Podaj nazwę grupy do usunięcia");
+    let name = sessionStorage.getItem("Grupa");
+	console.log(group)
     if (group == null || group === "") {
-        console.log("Nie podano nazwy grupy")
-    } else {
-        if (confirm("Czy chcesz usunąć grupe?")) {
-            console.log("usunięto grupe")
-        }
-    }
+        //console.log("Nie podano nazwy grupy");
+		confirm("Nie podano nazwy grupy.");
+    } else if(group === name){
+		if (confirm("Czy chcesz usunąć grupe?")) {
+			console.log("usunięto grupe")
+			location.href = 'index.html';
+		}
+	}else{
+		confirm("Grupa o takiej nazwie nie istnieje.");
+	}
 }
 
 let numer_domownika = 1;
@@ -673,91 +668,15 @@ function animateWorkingScena(){
     setInterval(function(){$(id).toggleClass('scena-dziala')}, 30000);
 }
 
-function start() {
+window.onload = function () {
 	refreshDevices();
-	readSessionStorage();
-	updateSceny();
-	sprawdz_ilosc_scen();
-	updateSelectWithDevicesInSceny();
-	animateWorkingScena();
-}
+    console.log("Refreshing data....");
+    readSessionStorage();
+    updateSceny();
+    sprawdz_ilosc_scen();
+    updateSelectWithDevicesInSceny();
+    animateWorkingScena();
 
-window.transitionToPage = function (href) {
-	document.querySelector('body').style.opacity = 0
-	setTimeout(function () {
-		window.location.href = href
-	}, 500)
-}
-
-document.addEventListener('DOMContentLoaded', function (event) {
-	document.querySelector('body').style.opacity = 1
-})
-
-
-function JSalert(name) {
-	swal("Gratulacje! Dodano:" + name + "", "", "success");
-}
-
-function JSalertDelete(id) {
-	swal({
-			title: "Jesteś pewny?",
-			text: "Nie będzie można przywrócić usuniętego urządzenia!",
-			icon: "warning",
-			buttons: true,
-			dangerMode: true,
-		})
-		.then((willDelete) => {
-			if (willDelete) {
-				swal("Brawo! Urządzenie " + id + " zostało usunięte!", {
-					icon: "success",
-				});
-				deleteDevice(id)
-			} else {
-				swal("Oj! Urządzenie " + id + " nie zostało usunięte!");
-			}
-		});
-}
-
-//Funkcje urządzeń
-
-function addSpeaker(name) {
-	var result = `<div name=" ` + name + `" + id="` + name + `" class="device">
-	<h2>` + name + `</h2>
-	<div class="turn">
-		<!--Ikona-->
-		<i id='speaker' class='fas fa-music'></i>
-		<label class="switch">
-			<input type="checkbox">' +
-			<span class="slider round"></span>' +
-		</label>
-	</div>
-
-	<i id="` + name + `more_button" class="fas fa-angle-double-right" onclick="openTab('settings_` + name + `')"></i>
-	
-	<!--Ustawienia-->
-	<div class="device_more" id="settings_` + name + `">
-		<!--Usuwanie-->
-		<i class='far fa-trash-alt' onclick="deleteDevice('` + name + `')"></i>
-		<i id="` + name + `less_button" class='fas fa-angle-double-left' onclick="closeTab('settings_` + name + `')"></i>
-		<!--Usuwanie-->
-
-		<!--Ustawienia DALEJ-->
-
-		<div class="album_container">
-		<img src="images/slawomir.jpg">
-		<div class="slider_container" id="slider_container2">
-		<label for="myRange2"> Głośność</label>
-			<input orient="vertical" type="range" min="0" max="100" value="50" class="slider_x" id="myRange2" oninput="this.nextElementSibling.value=this.value">
-			<output>50</output>
-			<br>
-		</div>
-		</div>
-
-
-		<span>Akutalnie odtwarzany utwór: </span>
-		<div class="scroll_container">
-		<p>Sławomir - Miłość w Zakopanem </p>
-		</div>
-	</div>`
-	return result;
+    let nazwa = sessionStorage.getItem("Grupa");
+    document.getElementById('nazwagrupy').innerText = nazwa;
 }

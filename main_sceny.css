@@ -41,7 +41,6 @@ body {
     padding: 20px;
     background: rgba(172, 170, 170, 0.33);
     border-radius: 20px;
-    border: gray 2px solid;
 }
 
 .button-add-device {
@@ -78,29 +77,27 @@ input[type=radio] {
     margin-right: 60px;
 }
 
-.buttons .button {
+.button {
     padding: 12px 42px;
-    font-size: 28px;
-    color: white;
-}
-
-.buttons .button:hover{
-    box-shadow: darkgray 4px 4px;
+    font-size: 18px;
+    margin-bottom: 50px;
 }
 
 .button-cancel {
     background: none;
     border: none;
     margin-right: 15px;
-    background-color: #a00e0e;
 }
 
 .button-cancel:hover {
-    background-color: #880c0c;
+    color: #e21111;
 }
 
 .button-add {
-    background-color: #293973;
+    background: #293973;
+    color: #F0EBE2;
+    border-bottom: 4px solid black;
+    border-right: 4px solid black;
 }
 
 .button-add:hover {

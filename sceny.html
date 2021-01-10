@@ -1,581 +1,650 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <title>Pocket Home</title>
     <link rel="stylesheet" href="main_sceny.css">
 
-    <link href="https://cdn.jsdelivr.net/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/semantic-ui/2.1.8/semantic.min.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/semantic-ui/2.1.8/semantic.min.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 </head>
-
 <body>
-    <nav class="navigation-bar">
-        <img class="logo" src="img/logo.png" alt="logo">
-        <ul>
-            <li><a href="#">Sceny</a></li>
-        </ul>
-    </nav>
-    <div style="clear:both;"></div>
-    <div class="form">
+<nav class="navigation-bar">
+    <img class="logo" src="img/logo.png" alt="logo">
+    <ul>
+        <li><a href="#">Sceny</a></li>
+    </ul>
+</nav>
+<div style="clear:both;"></div>
+<div class="form">
 
-        <h1>Nazwa</h1>
-        <p>Podaj jak ma nazywać się scena</p>
-        <div class="ui input">
-            <input id="name" type="text" placeholder="Nazwa sceny">
+    <h1>Nazwa</h1>
+    <p>Podaj jak ma nazywać się scena</p>
+    <div class="ui input">
+        <input id="name" type="text" placeholder="Nazwa sceny">
+    </div>
+    <p id="warning1" class="warning"></p>
+
+    <h1>Warunek</h1>
+    <p>Określ sposób uruchomienia sceny</p>
+    <div class="warunek" id="warunek">
+        <label>
+            <input type="radio" id="recznie" name="warunek" value="recznie" checked onclick="ShowHideDiv()"> Uruchom
+            ręcznie
+        </label>
+        <label>
+            <input type="radio" id="dzien-godzina" name="warunek" value="dzien_godzina" onclick="ShowHideDiv()"> Dzień i
+            godzina
+        </label>
+    </div>
+
+    <div class="dzien_godzina" id="dzien-godzina-more">
+
+        Rozpocznij o <input type="time" id="time" name="time">
+        <p id="warning2" class="warning"></p>
+
+        Zakończ o <input type="time" id="timeend" name="time">
+        <p id="warning22" class="warning"></p>
+
+        <form class="dowPicker">
+            <div class="dowPickerOption">
+                <input name="datepicker" value="P" type="checkbox" id="dow1">
+                <label for="dow1">P</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="W" type="checkbox" id="dow2">
+                <label for="dow2">W</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="Ś" type="checkbox" id="dow3">
+                <label for="dow3">Ś</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="C" type="checkbox" id="dow4">
+                <label for="dow4">C</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="Pt" type="checkbox" id="dow5">
+                <label for="dow5">P</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="S" type="checkbox" id="dow6">
+                <label for="dow6">S</label>
+            </div>
+            <div class="dowPickerOption">
+                <input name="datepicker" value="N" type="checkbox" id="dow7">
+                <label for="dow7">N</label>
+            </div>
+
+        </form>
+
+    </div>
+    <p id="warning3" class="warning"></p>
+    <h1>Akcesoria</h1>
+    <p>Wybierz urządzenie i określ jego ustawienia</p>
+
+
+    <select name="akcesoria" id="akcesoria-select" class="ui search selection dropdown">
+        <option value="">Dodaj urządzenie</option>
+        <option value="lampka_nocna">Lampka nocna</option>
+        <option value="oswietlenie">Oświetlenie w łazience</option>
+        <option value="tv">TV w salonie</option>
+        <option value="glosnik">Głośnik w pokoju Andrzeja</option>
+        <option value="air_conditioning">Klimatyzacja</option>
+    </select>
+
+    <button type="button" class="button-add-device" onclick="addDevie()">Dodaj</button>
+
+    <div id="box">
+
+    </div>
+
+    <div class="device" id="lampka_nocna">
+        <div>
+            <h2>Lampka nocna
+                <i class='far fa-trash-alt' onclick="deleteDevice('lampka_nocna')"></i>
+            </h2>
         </div>
-        <p id="warning1" class="warning"></p>
-
-        <h1>Warunek</h1>
-        <p>Określ sposób uruchomienia sceny</p>
-        <div class="warunek" id="warunek">
-            <label>
-                <input type="radio" id="recznie" name="warunek" value="recznie" checked onclick="ShowHideDiv()"> Uruchom
-                ręcznie
-            </label>
-            <label>
-                <input type="radio" id="dzien-godzina" name="warunek" value="dzien_godzina" onclick="ShowHideDiv()">
-                Dzień i
-                godzina
-            </label>
-        </div>
-
-        <div class="dzien_godzina" id="dzien-godzina-more">
-
-            Rozpocznij o <input type="time" id="time" name="time">
-            <p id="warning2" class="warning"></p>
-
-            Zakończ o <input type="time" id="timeend" name="time">
-            <p id="warning22" class="warning"></p>
-
-            <form class="dowPicker">
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="P" type="checkbox" id="dow1">
-                    <label for="dow1">P</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="W" type="checkbox" id="dow2">
-                    <label for="dow2">W</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="Ś" type="checkbox" id="dow3">
-                    <label for="dow3">Ś</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="C" type="checkbox" id="dow4">
-                    <label for="dow4">C</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="Pt" type="checkbox" id="dow5">
-                    <label for="dow5">P</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="S" type="checkbox" id="dow6">
-                    <label for="dow6">S</label>
-                </div>
-                <div class="dowPickerOption">
-                    <input name="datepicker" value="N" type="checkbox" id="dow7">
-                    <label for="dow7">N</label>
-                </div>
-
+        <div class="option">
+            <i class='far fa-lightbulb'></i>
+            <form id="lampka_form" class="radio" onchange="validateOption('lampka_nocna', 'lampka')">
+                <label>
+                    <input class="radiobutton" type="radio" name="lampka" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="lampka" value="off"> Wyłącz
+                </label>
             </form>
-
+            <p class="warning" id="lampka"></p>
         </div>
-        <p id="warning3" class="warning"></p>
-        <h1>Akcesoria</h1>
-        <p>Wybierz urządzenie i określ jego ustawienia</p>
+    </div>
 
-
-        <select name="akcesoria" id="akcesoria-select" class="ui search selection dropdown">
-            <option value="">Dodaj urządzenie</option>
-            <option value="lampka_nocna">Lampka nocna</option>
-            <option value="oswietlenie">Oświetlenie w łazience</option>
-            <option value="tv">TV w salonie</option>
-            <option value="glosnik">Głośnik w pokoju Andrzeja</option>
-            <option value="air_conditioning">Klimatyzacja</option>
-        </select>
-
-        <button type="button" class="button-add-device" onclick="addDevie()">Dodaj</button>
-
-        <div class="device" id="lampka_nocna">
-            <div>
-                <h2>Lampka nocna
-                    <i class='far fa-trash-alt' onclick="deleteDevice('lampka_nocna')"></i>
-                </h2>
-            </div>
-            <div class="option">
-                <i class='far fa-lightbulb'></i>
-                <form id="lampka_form" class="radio" onchange="validateOption('lampka_nocna', 'lampka')">
-                    <label>
-                        <input class="radiobutton" type="radio" name="lampka" value="on"> Włącz
-                    </label>
-                    <label>
-                        <input class="radiobutton" type="radio" name="lampka" value="off"> Wyłącz
-                    </label>
-                </form>
-                <p class="warning" id="lampka"></p>
-            </div>
+    <div class="device" id="oswietlenie">
+        <div>
+            <h2>Oświetlenie w łazience
+                <i class='far fa-trash-alt' onclick="deleteDevice('oswietlenie')"></i>
+            </h2>
         </div>
+        <div class="option">
+            <i class='far fa-lightbulb'></i>
+            <form id="oswietlenie_form" class="radio" onchange="validateOption('oswietlenie', 'swiatlo')">
+                <label>
+                    <input class="radiobutton" type="radio" name="swiatlo" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="swiatlo" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="swiatlo"></p>
 
-
-        <div class="device" id="oswietlenie">
             <div>
-                <h2>Oświetlenie w łazience
-                    <i class='far fa-trash-alt' onclick="deleteDevice('oswietlenie')"></i>
-                </h2>
+                <p>Intensywność światła</p>
+                <span>10%</span>
+                <input type="range" id="intensity" name="intensity"
+                       min="10" max="100">
+                <span>100%</span>
             </div>
-            <div class="option">
-                <i class='far fa-lightbulb'></i>
-                <form id="oswietlenie_form" class="radio" onchange="validateOption('oswietlenie', 'swiatlo')">
-                    <label>
-                        <input class="radiobutton" type="radio" name="swiatlo" value="on"> Włącz
-                    </label>
-                    <label>
-                        <input class="radiobutton" type="radio" name="swiatlo" value="off"> Wyłącz
-                    </label>
-                </form>
-                <p class="warning" id="swiatlo"></p>
-
-                <div>
-                    <p>Intensywność światła</p>
-                    <span>10%</span>
-                    <input type="range" id="intensity" name="intensity" min="10" max="100">
-                    <span>100%</span>
-                </div>
-
-                <div class="color-header">
-                    <p>Kolor światła</p>
-
-                    <div class="colorPicker">
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color1" name="color" checked>
-                            <label id="colora" for="color1"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color2" name="color">
-                            <label id="colorb" for="color2"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color3" name="color">
-                            <label id="colorc" for="color3"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color4" name="color">
-                            <label id="colord" for="color4"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color5" name="color">
-                            <label id="colore" for="color5"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color6" name="color">
-                            <label id="colorf" for="color6"></label>
-                        </div>
-                        <div class="colorPickerOption">
-                            <input type="radio" id="color7" name="color">
-                            <label id="colorg" for="color7"></label>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div class="device" id="glosnik">
-            <div>
-                <h2>Głośnik w pokoju Andrzeja
-                    <i class='far fa-trash-alt' onclick="deleteDevice('glosnik')"></i>
-                </h2>
-            </div>
-            <div class="option">
-                <i class="fas fa-music"></i>
-                <form class="radio" onchange="validateOption('glosnik', 'muza')">
-                    <label>
-                        <input class="radiobutton" type="radio" name="muza" value="on"> Włącz
-                    </label>
-                    <label>
-                        <input class="radiobutton" type="radio" name="muza" value="off"> Wyłącz
-                    </label>
-                </form>
-                <p class="warning" id="muza"></p>
-
-                <div>
-                    <p>Głośność</p>
-                    <span>10%</span>
-                    <input type="range" id="volume" name="intensity" min="10" max="100">
-                    <span>100%</span>
-                </div>
-                <div class="color-header">
-                    <p>Wybierz playlistę</p>
-                    <select name="playlist" id="playlist-select" class="ui search selection dropdown">
-                        <option value="">Przeglądaj</option>
-                        <option value="hity">Polskie hity</option>
-                        <option value="trening">Trening w domu</option>
-                        <option value="koledy">Kolędy</option>
-                        <option value="ballady">Love Ballads</option>
-                        <option value="metal">New Metal Tracks</option>
-                        <option value="domowka">Domówka</option>
-                        <option value="dance">Dance Classic</option>
-                        <option value="rock">Rock Party</option>
-                        <option value="bifor">Bifor</option>
-                    </select>
-                </div>
-                <p class="warning" id="warning-music">Nie wybrano playlisty do odtworzenia</p>
-            </div>
-        </div>
-
-
-        <div class="device" id="air_conditioning">
-            <div>
-                <h2>Klimatyzacja
-                    <i class='far fa-trash-alt' onclick="deleteDevice('air_conditioning')"></i>
-                </h2>
-            </div>
-            <div class="option">
-                <i class="fas fa-wind"></i>
-                <form class="radio" onchange="validateOption('air_conditioning', 'klima')">
-                    <label>
-                        <input class="radiobutton" type="radio" name="klima" value="on"> Włącz
-                    </label>
-                    <label>
-                        <input class="radiobutton" type="radio" name="klima" value="off"> Wyłącz
-                    </label>
-                </form>
-                <p class="warning" id="klima"></p>
-            </div>
-
-            <div class="temperature">
-                <div class="temp1">
-                    <button onclick="decrementValue()"><i class="fas fa-minus"></i></button>
-                </div>
-                <div class="temp2">
-                    <h2 id="temp">20 &#x2103</h2>
-                </div>
-                <div class="temp1">
-                    <button onclick="incrementValue()"><i class="fas fa-plus"></i></button>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-
-            <div class="power">
-
-                <span>Moc</span>
-                <div class="powerPickerOption">
-                    <input type="radio" id="powerSmall" name="moc">
-                    <label for="powerSmall"><i id="moc1" class="fas fa-fan"></i></label>
-                </div>
-                <div class="powerPickerOption">
-                    <input type="radio" id="powerMedium" name="moc">
-                    <label for="powerMedium"><i id="moc2" class="fas fa-fan"></i></label>
-                </div>
-                <div class="powerPickerOption">
-                    <input type="radio" id="powerBig" name="moc">
-                    <label for="powerBig"><i id="moc3" class="fas fa-fan"></i></label>
-                </div>
-                <div class="powerPickerOption">
-                    <input type="radio" id="auto" name="moc">
-                    <label class="button-auto" for="auto"><b>AUTO</b></label>
-                </div>
-
-            </div>
-            <div style="clear:both;"></div>
-            <p class="warning" id="warning-power">Wybierz moc urządzenia</p>
 
             <div class="color-header">
-                <span>Tryb</span>
-                <select name="type" id="type-select" class="ui search selection dropdown">
-                    <option value="">Przeglądaj</option>
-                    <option value="AUTO">AUTO</option>
-                    <option value="chłodzenie">Chłodzenie</option>
-                    <option value="wentylator">Wentylator</option>
-                    <option value="suche">Osuszanie powietrza</option>
-                    <option value="Ogrzewanie">Ogrzewanie</option>
-                    <option value="eco">ECO</option>
-                </select>
+                <p>Kolor światła</p>
+
+                <div class="colorPicker">
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color1" name="color" checked>
+                        <label id="colora" for="color1"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color2" name="color">
+                        <label id="colorb" for="color2"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color3" name="color">
+                        <label id="colorc" for="color3"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color4" name="color">
+                        <label id="colord" for="color4"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color5" name="color">
+                        <label id="colore" for="color5"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color6" name="color">
+                        <label id="colorf" for="color6"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color7" name="color">
+                        <label id="colorg" for="color7"></label>
+                    </div>
+                </div>
             </div>
-            <p class="warning" id="warning_air_conditioning">Nie wybrano trybu pracy</p>
 
         </div>
+    </div>
 
+
+    <div class="device" id="glosnik">
+        <div>
+            <h2>Głośnik w pokoju Andrzeja
+                <i class='far fa-trash-alt' onclick="deleteDevice('glosnik')"></i>
+            </h2>
+        </div>
+        <div class="option">
+            <i class="fas fa-music"></i>
+            <form class="radio" onchange="validateOption('glosnik', 'muza')">
+                <label>
+                    <input class="radiobutton" type="radio" name="muza" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="muza" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="muza"></p>
+
+            <div>
+                <p>Głośność</p>
+                <span>10%</span>
+                <input type="range" id="volume" name="intensity"
+                       min="10" max="100">
+                <span>100%</span>
+            </div>
+            <div class="color-header">
+                <p>Wybierz playlistę</p>
+                <select name="playlist" id="playlist-select" class="ui search selection dropdown">
+                    <option value="">Przeglądaj</option>
+                    <option value="hity">Polskie hity</option>
+                    <option value="trening">Trening w domu</option>
+                    <option value="koledy">Kolędy</option>
+                    <option value="ballady">Love Ballads</option>
+                    <option value="metal">New Metal Tracks</option>
+                    <option value="domowka">Domówka</option>
+                    <option value="dance">Dance Classic</option>
+                    <option value="rock">Rock Party</option>
+                    <option value="bifor">Bifor</option>
+                </select>
+            </div>
+            <p class="warning" id="warning-music">Nie wybrano playlisty do odtworzenia</p>
+        </div>
+    </div>
+
+
+    <div class="device" id="air_conditioning">
+        <div>
+            <h2>Klimatyzacja
+                <i class='far fa-trash-alt' onclick="deleteDevice('air_conditioning')"></i>
+            </h2>
+        </div>
+        <div class="option">
+            <i class="fas fa-wind"></i>
+            <form class="radio" onchange="validateOption('air_conditioning', 'klima')">
+                <label>
+                    <input class="radiobutton" type="radio" name="klima" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="klima" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="klima"></p>
+        </div>
+
+        <div class="temperature">
+            <div class="temp1">
+                <button onclick="decrementValue('air_conditioning-temp')"><i class="fas fa-minus"></i></button>
+            </div>
+            <div class="temp2"><h2 id="air_conditioning-temp">20 &#x2103</h2></div>
+            <div class="temp1">
+                <button onclick="incrementValue('air_conditioning-temp')"><i class="fas fa-plus"></i></button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="power">
+
+            <span>Moc</span>
+            <div class="powerPickerOption">
+                <input type="radio" id="powerSmall" name="moc1">
+                <label for="powerSmall"><i id="moc1" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="powerMedium" name="moc1">
+                <label for="powerMedium"><i id="moc2" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="powerBig" name="moc1">
+                <label for="powerBig"><i id="moc3" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="auto" name="moc1">
+                <label class="button-auto" for="auto"><b>AUTO</b></label>
+            </div>
+
+        </div>
+        <div style="clear:both;"></div>
+        <p class="warning" id="warning-power">Wybierz moc urządzenia</p>
+
+        <div class="color-header">
+            <span>Tryb</span>
+            <select name="type" id="type-select" class="ui search selection dropdown">
+                <option value="">Przeglądaj</option>
+                <option value="AUTO">AUTO</option>
+                <option value="chłodzenie">Chłodzenie</option>
+                <option value="wentylator">Wentylator</option>
+                <option value="suche">Osuszanie powietrza</option>
+                <option value="Ogrzewanie">Ogrzewanie</option>
+                <option value="eco">ECO</option>
+            </select>
+        </div>
+        <p class="warning" id="warning_air_conditioning">Nie wybrano trybu pracy</p>
 
     </div>
 
-    <div class="buttons">
-        <button type="button" class="button button-cancel" onclick="location.href = 'index.html';">Anuluj</button>
-        <button type="button" id="add_button" class="button button-add" onclick="validate()">Dodaj scenę</button>
-    </div>
 
-    <script>
-        $('#akcesoria-select').dropdown();
-        $('#playlist-select').dropdown();
-        $('#type-select').dropdown();
+</div>
 
-        var scena1 = {
-            type: "recznie",
-            name: "Jestem w pracy",
-            timeStart: "08:00",
-            timeEnd: "16:00",
-            days: ["P", "W", "Ś", "C", "Pt"],
-            devices: [{
-                    id: "lampka_nocna",
-                    mode: "off"
-                },
-                {
-                    id: "glosnik",
-                    mode: "off"
-                }
-            ],
-            device: ['oswietlenie', 'glosnik']
-        };
-        var scena2 = {
-            type: "day_and_hour",
-            name: "Impreza",
-            timeStart: "20:00",
-            timeEnd: "23:00",
-            days: ["Pt"],
-            devices: [{
-                    id: "oswietlenie",
-                    mode: "on"
-                },
-                {
-                    id: "glosnik",
-                    mode: "on"
-                }
-            ],
-            device: ['oswietlenie', 'glosnik']
-        };
+<div class="buttons">
+    <button type="button" class="button button-cancel" onclick="location.href = 'index.html';">Anuluj
+    </button>
+    <button type="button" id="add_button" class="button button-add" onclick="validate()">Dodaj scenę
+    </button>
+</div>
 
-        var sceny = [scena1, scena2];
+<script>
+    $('#akcesoria-select').dropdown();
+    $('#playlist-select').dropdown();
+    $('#type-select').dropdown();
 
-        var devices = [];
+    // let data;
+    //
+    // if (sessionStorage.getItem('AllDevices') == null) {
+    //     console.log("select pusty");
+    //     //console.log(data);
+    // } else {
+    //     data = JSON.parse(sessionStorage.getItem('AllDevices'));
+    //     console.log("select pełny");
+    //     //console.log(data);
+    // }
+    //
+    // for (let device in data) {
+    //     let name = data[device].name;
+    //     let code = data[device].code;
+    //
+    //     if (code == 2222)
+    //    {
+    //
+    //     }
+    // }
 
-        var count_device = 0;
-
-        const button = document.getElementById('add_button')
-        button.disabled = true;
-
-        function ShowHideDiv() {
-            var chkYes = document.getElementById("dzien-godzina");
-            var dvPassport = document.getElementById("dzien-godzina-more");
-            dvPassport.style.display = chkYes.checked ? "block" : "none";
-            uncheckRadio();
-        }
-
-        function incrementValue() {
-            var value = document.getElementById("temp").firstChild.nodeValue;
-            value = value.split(" ");
-            var new_value = parseInt(value[0]);
-            new_value = isNaN(new_value) ? 0 : new_value;
-            new_value++;
-            document.getElementById("temp").innerHTML = new_value + " " + value[1];
-            //document.getElementById('number').value = value;
-        }
-
-        function decrementValue() {
-            var value = document.getElementById("temp").firstChild.nodeValue;
-            value = value.split(" ");
-            var new_value = parseInt(value[0]);
-            new_value = isNaN(new_value) ? 0 : new_value;
-            new_value--;
-            document.getElementById("temp").innerHTML = new_value + " " + value[1];
-            //document.getElementById('number').value = value;
-        }
-
-        function readSessionStorage() {
-            if (sessionStorage.getItem('Sceny') === null) {
-                console.log("pusty plik odczytano")
-                //sessionStorage.setItem('Sceny', '[]');
-            } else {
-                var data = JSON.parse(sessionStorage.getItem('Sceny'));
-                console.log(data)
-                sceny = data;
-                console.log(sceny);
-            }
-        }
-
-        function addToSessionStorage() {
-            sessionStorage.setItem('Sceny', JSON.stringify(sceny));
-        }
-
-
-        //funkcja dodawania urządzeń do sceny
-        function addDevie() {
-            var select = document.getElementById("akcesoria-select");
-            var option_value = select.value;
-            var device = document.getElementById(option_value);
-            const style = getComputedStyle(device);
-            if (style.display === "none") {
-                device.style.display = "block";
-                count_device++;
-                devices.push(option_value);
-            }
-            button.disabled = false;
-        }
-
-        function deleteDevice(device_id) {
-            var device = document.getElementById(device_id);
-            device.style.display = "none";
-            count_device--;
-
-            if (count_device === 0) {
-                button.disabled = true;
-            }
-
-            devices = devices.filter(function (item) {
-                return item !== device.id
-            });
-        }
-
-        function validatePlaylist() {
-            const style = getComputedStyle(document.getElementById("glosnik"));
-            var select = document.getElementById("playlist-select");
-            var warning = document.getElementById("warning-music");
-
-            var option_value = select.value;
-
-            if (style.display === "block") {
-                if (option_value === "") {
-                    warning.style.display = "block";
-                    return false;
-                } else {
-                    warning.style.display = "none";
-                    return true;
-                }
-            }
-        }
-
-        function validate_air_conditioning() {
-            const style = getComputedStyle(document.getElementById("air_conditioning"));
-            var select = document.getElementById("type-select");
-            var warning = document.getElementById("warning_air_conditioning");
-
-            var option_value = select.value;
-
-            let temp1 = false;
-            let temp2 = false;
-
-            if (style.display === "block") {
-                if (option_value === "") {
-                    warning.style.display = "block";
-                    temp1 = false;
-                } else {
-                    warning.style.display = "none";
-                    temp1 = true;
-                }
-
-
-                let moc_counter = 0;
-
-                var moc = document.getElementsByName("moc");
-                for (let i = 0; i < moc.length; i++) {
-                    if (moc[i].checked) {
-                        moc_counter++;
-                    }
-                }
-
-                var warning_power = document.getElementById("warning-power");
-                if (moc_counter === 0) {
-                    warning_power.style.display = "block";
-                    temp2 = false
-                } else {
-                    warning_power.style.display = "none";
-                    temp2 = false;
-                }
-            }
-            return temp1 && temp2;
-        }
-
-        var deviceId = [{
-                id: "lampka_nocna",
-                formid: "lampka"
-            },
+    var scena1 = {
+        type: "day_and_hour",
+        name: "Jestem w pracy",
+        timeStart: "08:00",
+        timeEnd: "16:00",
+        days: ["P", "W", "Ś", "C", "Pt"],
+        devices: [
             {
-                id: "oswietlenie",
-                formid: "swiatlo"
+                id: "lampka_nocna",
+                mode: "off"
             },
             {
                 id: "glosnik",
-                formid: "muza"
+                mode: "off"
+            }
+        ],
+        device: ['oswietlenie', 'glosnik']
+    };
+    var scena2 = {
+        type: "recznie",
+        name: "Impreza",
+        timeStart: "20:00",
+        timeEnd: "23:00",
+        days: ["Pt"],
+        devices: [
+            {
+                id: "oswietlenie",
+                mode: "on"
             },
             {
-                id: "air_conditioning",
-                formid: "klima"
-            },
-            //{id: "tv", formid: ""}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-        ];
+                id: "glosnik",
+                mode: "on"
+            }
+        ],
+        device: ['oswietlenie', 'glosnik']
+    };
 
-        function validateOnOffOption() {
-            let temp = 0;
-            let countDevice = 0;
-            for (let elements = 0; elements < deviceId.length; elements++) {
+    var sceny = [scena1, scena2];
 
-                let style = getComputedStyle(document.getElementById(deviceId[elements].id));
+    var devices = [];
+
+    var count_device = 0;
+
+    const button = document.getElementById('add_button')
+    button.disabled = true;
+
+    function ShowHideDiv() {
+        var chkYes = document.getElementById("dzien-godzina");
+        var dvPassport = document.getElementById("dzien-godzina-more");
+        dvPassport.style.display = chkYes.checked ? "block" : "none";
+        uncheckRadio();
+    }
+
+    function incrementValue(id) {
+        var value = document.getElementById(id).firstChild.nodeValue;
+        value = value.split(" ");
+        var new_value = parseInt(value[0]);
+        new_value = isNaN(new_value) ? 0 : new_value;
+        new_value++;
+        document.getElementById(id).innerHTML = new_value + " " + value[1];
+        //document.getElementById('number').value = value;
+    }
+
+    function decrementValue(id) {
+        var value = document.getElementById(id).firstChild.nodeValue;
+        value = value.split(" ");
+        var new_value = parseInt(value[0]);
+        new_value = isNaN(new_value) ? 0 : new_value;
+        new_value--;
+        document.getElementById(id).innerHTML = new_value + " " + value[1];
+        //document.getElementById('number').value = value;
+    }
+
+    function readSessionStorage() {
+        if (sessionStorage.getItem('Sceny') === null) {
+            console.log("pusty plik odczytano")
+            //sessionStorage.setItem('Sceny', '[]');
+        } else {
+            var data = JSON.parse(sessionStorage.getItem('Sceny'));
+            sceny = data;
+            console.log(sceny);
+        }
+    }
+
+    function addToSessionStorage() {
+        sessionStorage.setItem('Sceny', JSON.stringify(sceny));
+    }
+
+    //funkcja dodawania urządzeń do sceny
+    function addDevie() {
+        var select = document.getElementById("akcesoria-select");
+        var option_value = select.value;
+        var device = document.getElementById(option_value);
+        const style = getComputedStyle(device);
+        if (style.display === "none") {
+            device.style.display = "block";
+            count_device++;
+            devices.push(option_value);
+        }
+        button.disabled = false;
+    }
+
+    function deleteDevice(device_id) {
+        var device = document.getElementById(device_id);
+        device.style.display = "none";
+        count_device--;
+
+        if (count_device === 0) {
+            button.disabled = true;
+        }
+
+        devices = devices.filter(function (item) {
+            return item !== device.id
+        });
+    }
+
+    function validatePlaylist() {
+        const style = getComputedStyle(document.getElementById("glosnik"));
+        var select = document.getElementById("playlist-select");
+        var warning = document.getElementById("warning-music");
+
+        var option_value = select.value;
+
+        if (style.display === "block") {
+            if (option_value === "") {
+                warning.style.display = "block";
+                return false;
+            } else {
+                warning.style.display = "none";
+                return true;
+            }
+        }
+    }
+
+    function validate_air_conditioning() {
+        const style = getComputedStyle(document.getElementById("air_conditioning"));
+        var select = document.getElementById("type-select");
+        var warning = document.getElementById("warning_air_conditioning");
+
+        var option_value = select.value;
+
+        let temp1 = false;
+        let temp2 = false;
+
+        if (style.display === "block") {
+            if (option_value === "") {
+                warning.style.display = "block";
+                temp1 = false;
+            } else {
+                warning.style.display = "none";
+                temp1 = true;
+            }
+
+
+            let moc_counter = 0;
+
+            var moc = document.getElementsByName("moc1");
+            for (let i = 0; i < moc.length; i++) {
+                if (moc[i].checked) {
+                    moc_counter++;
+                }
+            }
+
+            var warning_power = document.getElementById("warning-power");
+            if (moc_counter === 0) {
+                warning_power.style.display = "block";
+                temp2 = false
+            } else {
+                warning_power.style.display = "none";
+                temp2 = false;
+            }
+        }
+
+        if (sessionStorage.getItem('AllDevices') == null) {
+            console.log("select pusty");
+            //console.log(data);
+        } else {
+            data = JSON.parse(sessionStorage.getItem('AllDevices'));
+            console.log("select pełny");
+            //console.log(data);
+        }
+
+        for (let device in data) {
+            let name = data[device].name;
+            let code = data[device].code;
+
+            if (code == 2222) {
+
+                let id2 = `${name+'-select'}`;
+                let id3 = `${'warning_' + name}`;
+                console.log(id2)
+                console.log(id3)
+                const style = getComputedStyle(document.getElementById(name));
+                let select = document.getElementById(id2);
+                let warning = document.getElementById(id3);
+
+                let option_value = select.value;
+
+                let temp1 = false;
+                let temp2 = false;
 
                 if (style.display === "block") {
-                    countDevice++;
-                    var form = document.getElementsByName(deviceId[elements].formid);
-                    var warning = document.getElementById(deviceId[elements].formid);
-
-                    if (!form[0].checked && !form[1].checked) {
-                        warning.innerText = "Określ stan";
+                    if (option_value === "") {
                         warning.style.display = "block";
+                        temp1 = false;
                     } else {
-                        temp++;
+                        warning.style.display = "none";
+                        temp1 = true;
+                    }
+
+                    let moc_counter = 0;
+
+                    let moc = document.getElementsByName(`${name + 1}`);
+                    for (let i = 0; i < moc.length; i++) {
+                        if (moc[i].checked) {
+                            moc_counter++;
+                        }
+                    }
+
+                    let warning_power = document.getElementById(`${'warning-' + name + '-power'}`);
+                    if (moc_counter === 0) {
+                        warning_power.style.display = "block";
+                        temp2 = false
+                    } else {
+                        warning_power.style.display = "none";
+                        temp2 = false;
                     }
                 }
             }
-            return temp === countDevice;
         }
 
+        return temp1 && temp2;
+    }
 
-        function validateOption(deviceId, formId) {
+    var deviceId = [
+        {id: "lampka_nocna", formid: "lampka"},
+        {id: "oswietlenie", formid: "swiatlo"},
+        {id: "glosnik", formid: "muza"},
+        {id: "air_conditioning", formid: "klima"},
+        //{id: "tv", formid: ""}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+    ];
 
-            var dzien_godzina = document.getElementById("dzien-godzina");
-            var recznie = document.getElementById("recznie");
-            var form = document.getElementsByName(formId);
-            var warning = document.getElementById(formId);
-            warning.style.display = "none";
+    function validateOnOffOption() {
+        let temp = 0;
+        let countDevice = 0;
+        for (let elements = 0; elements < deviceId.length; elements++) {
 
-            var checked_days = [];
+            let style = getComputedStyle(document.getElementById(deviceId[elements].id));
 
-            var days = document.getElementsByName("datepicker");
-            for (let i = 0; i < days.length; i++) {
-                if (days[i].checked) {
-                    checked_days.push(days[i].value);
+            if (style.display === "block") {
+                countDevice++;
+                var form = document.getElementsByName(deviceId[elements].formid);
+                var warning = document.getElementById(deviceId[elements].formid);
+
+                if (!form[0].checked && !form[1].checked) {
+                    warning.innerText = "Określ stan";
+                    warning.style.display = "block";
+                } else {
+                    temp++;
                 }
             }
+        }
+        return temp === countDevice;
+    }
 
-            if (recznie.checked) {
-                warning.style.display = "none";
+
+    function validateOption(deviceId, formId) {
+
+        var dzien_godzina = document.getElementById("dzien-godzina");
+        var recznie = document.getElementById("recznie");
+        var form = document.getElementsByName(formId);
+        var warning = document.getElementById(formId);
+        warning.style.display = "none";
+
+        var checked_days = [];
+
+        var days = document.getElementsByName("datepicker");
+        for (let i = 0; i < days.length; i++) {
+            if (days[i].checked) {
+                checked_days.push(days[i].value);
             }
+        }
 
-            if (dzien_godzina.checked) {
-                for (let i = 0; i < sceny.length; i++) {
-                    if (sceny[i].type === "day_and_hour") {
-                        if (validateHours()) {
-                            if (validateDays().correct && containElement(sceny[i].days, checked_days)) {
-                                var timestart = document.getElementById("time").value;
-                                var timeend = document.getElementById("timeend").value;
-                                if (sceny[i].timeStart <= timestart && sceny[i].timeEnd >= timeend ||
-                                    !(sceny[i].timeStart < timestart) && !(timeend < sceny[i].timeStart) ||
-                                    !(sceny[i].timeEnd < timestart) && !(timeend < sceny[i].timeEnd)) {
-                                    for (let id in sceny[i].devices) {
-                                        if (sceny[i].devices[id].id === deviceId) {
-                                            for (var j = 0; j < form.length; j++) {
-                                                if (form[i].checked) {
-                                                    if (sceny[i].devices[id].mode !== form[j].value) {
-                                                        warning.innerText =
-                                                            `Zmień ustawienia, ponieważ w scenie o nazwie: "${sceny[i].name}" to urządzenie jest - ${changeName(form[j].value)} w godzinach: ${sceny[i].timeStart} - ${sceny[i].timeEnd}`;
-                                                        warning.style.display = "block";
-                                                    }
-                                                } else {
-                                                    warning.style.display = "none";
+        if (recznie.checked) {
+            warning.style.display = "none";
+        }
+
+        if (dzien_godzina.checked) {
+            for (let i = 0; i < sceny.length; i++) {
+                if (sceny[i].type === "day_and_hour") {
+                    if (validateHours()) {
+                        if (validateDays().correct && containElement(sceny[i].days, checked_days)) {
+                            var timestart = document.getElementById("time").value;
+                            var timeend = document.getElementById("timeend").value;
+                            if (sceny[i].timeStart <= timestart && sceny[i].timeEnd >= timeend ||
+                                !(sceny[i].timeStart < timestart) && !(timeend < sceny[i].timeStart) ||
+                                !(sceny[i].timeEnd < timestart) && !(timeend < sceny[i].timeEnd)) {
+                                for (let id in sceny[i].devices) {
+                                    if (sceny[i].devices[id].id === deviceId) {
+                                        for (var j = 0; j < form.length; j++) {
+                                            if (form[i].checked) {
+                                                if (sceny[i].devices[id].mode !== form[j].value) {
+                                                    warning.innerText = `Zmień ustawienia, ponieważ w scenie o nazwie: "${sceny[i].name}" to urządzenie jest - ${changeName(form[j].value)} w godzinach: ${sceny[i].timeStart} - ${sceny[i].timeEnd}`;
+                                                    warning.style.display = "block";
                                                 }
+                                            } else {
+                                                warning.style.display = "none";
                                             }
                                         }
                                     }
@@ -586,76 +655,219 @@
                 }
             }
         }
+    }
 
 
-        function changeName(name) {
-            if (name === "on") {
-                return "wyłączone";
-            } else {
-                return "włączone";
+    function changeName(name) {
+        if (name === "on") {
+            return "wyłączone";
+        } else {
+            return "włączone";
+        }
+    }
+
+    function containElement(array = [], array_with_elements = []) {
+        for (let i = 0; i < array_with_elements.length; i++) {
+            if (array.includes(array_with_elements[i]))
+                return true
+        }
+        return false;
+    }
+
+
+    function validateHours() {
+        var warning2 = document.getElementById("warning2");
+        var time_start_correct = false;
+        var time_end_correct = false;
+
+        //jezeli wybrałem dzień i godzine sprawdz:
+        //czy ustawiono czas
+        var time = document.getElementById("time").value;
+        if (time === "") {
+            warning2.innerText = "Nie wybrano godziny rozpoczęcia sceny";
+            warning2.style.display = "block";
+            time_start_correct = false;
+        } else {
+            warning2.style.display = "none";
+            time_start_correct = true;
+        }
+
+        var warning22 = document.getElementById("warning22");
+        //jezeli wybrałem dzień i godzine sprawdz:
+        //czy ustawiono czas
+        var timeend = document.getElementById("timeend").value;
+        if (timeend === "") {
+            warning22.innerText = "Nie wybrano godziny zakończenia sceny";
+            warning22.style.display = "block";
+            time_end_correct = false;
+        } else {
+            warning22.style.display = "none";
+            time_end_correct = true;
+        }
+
+        //czy godzina rozpoczęcia jest mniejsza niż zakończenia
+        if (timeend < time) {
+            warning22.innerText = "Godzina zakończenia nie może być wcześniej niż godzina rozpoczęcia";
+            warning22.style.display = "block";
+            time_end_correct = false;
+        }
+
+        if (time_end_correct === true && time_start_correct === true) {
+            return true;
+        }
+    }
+
+    function validateDays() {
+        //jakie wybrano dni tygodnia
+        var count_checked_days = 0;
+        var checked_days = [];
+        var object = {
+            correct: false,
+            days: []
+        }
+
+        var days = document.getElementsByName("datepicker");
+        for (let i = 0; i < days.length; i++) {
+            if (days[i].checked) {
+                count_checked_days++;
+                checked_days.push(days[i].value);
             }
         }
 
-        function containElement(array = [], array_with_elements = []) {
-            for (let i = 0; i < array_with_elements.length; i++) {
-                if (array.includes(array_with_elements[i]))
-                    return true
+        //nie wybrano żadnego dnia
+        var warning3 = document.getElementById("warning3");
+        if (count_checked_days === 0) {
+            warning3.innerText = "Wybierz przynajniej jeden dzień";
+            warning3.style.display = "block";
+        } else {
+            object.correct = true;
+            object.days = checked_days;
+            warning3.style.display = "none";
+        }
+        return object;
+    }
+
+    function validateAllwarnings() {
+
+        let d = document.getElementsByClassName("warning");
+        for (let i = 0; i < d.length; i++) {
+            let style = getComputedStyle(d[i])
+            if (style.display === "block") {
+                return false;
             }
-            return false;
+        }
+        return true;
+    }
+
+    document.getElementById("recznie").addEventListener("click", function () {
+        var warning = document.getElementsByClassName("warning");
+        var warning1 = document.getElementById("warning1");
+        let temp;
+
+        if (warning1.style.display === "block") {
+            temp = true;
+        } else {
+            temp = false;
+        }
+
+        for (let i = 0; i < warning.length; i++) {
+            warning[i].style.display = "none";
+        }
+
+        if (temp) {
+            warning1.style.display = "block";
+        }
+
+        var warning2 = document.getElementById("warning2");
+        warning2.style.display = "none";
+        var warning22 = document.getElementById("warning22");
+        warning22.style.display = "none";
+        var warning3 = document.getElementById("warning3");
+        warning3.style.display = "none";
+    });
+
+
+    function validate() {
+        var new_scene = {};
+        var count_checked_days = 0;
+
+        var checked_days = [];
+
+        var name_correct = true;
+
+        var name = document.getElementById("name");
+        var dzien_godzina = document.getElementById("dzien-godzina");
+        var recznie = document.getElementById("recznie");
+        var warning = document.getElementById("warning1");
+
+        var name_value = name.value;
+        const max_name = 10;
+
+        for (let scena in sceny) {
+            if (sceny[scena].name === name_value) {
+                warning.innerText = "Scena o takiej nazwie już istnieje zmień nazwę";
+                warning.style.display = "block";
+                name_correct = false;
+            } else if (name_value === "") {
+                warning.innerText = "Nie została podana nazwa sceny";
+                warning.style.display = "block";
+                name_correct = false;
+            } else {
+                if (name_value.length < max_name) {
+                    warning.style.display = "none";
+                    name_correct = true;
+                } else {
+                    warning.innerText = "Nazwa jest za długa, maksymalna ilość znaków to: " + max_name;
+                    warning.style.display = "block";
+                }
+            }
+        }
+
+        if (sceny.length === 0) {
+            if (name_value === "") {
+                warning.innerText = "Nie została podana nazwa sceny";
+                warning.style.display = "block";
+                name_correct = false;
+            } else {
+                if (name_value.length < max_name) {
+                    warning.style.display = "none";
+                    name_correct = true;
+                } else {
+                    warning.innerText = "Nazwa jest za długa, maksymalna ilość znaków to: " + max_name;
+                    warning.style.display = "block";
+                }
+            }
         }
 
 
-        function validateHours() {
-            var warning2 = document.getElementById("warning2");
-            var time_start_correct = false;
-            var time_end_correct = false;
+        if (recznie.checked) {
+            // var warning2 = document.getElementById("warning2");
+            // warning2.style.display = "none";
+            // var warning22 = document.getElementById("warning22");
+            // warning22.style.display = "none";
+            // var warning3 = document.getElementById("warning3");
+            // warning3.style.display = "none";
 
-            //jezeli wybrałem dzień i godzine sprawdz:
-            //czy ustawiono czas
-            var time = document.getElementById("time").value;
-            if (time === "") {
-                warning2.innerText = "Nie wybrano godziny rozpoczęcia sceny";
-                warning2.style.display = "block";
-                time_start_correct = false;
-            } else {
-                warning2.style.display = "none";
-                time_start_correct = true;
-            }
+            validatePlaylist();
+            validate_air_conditioning();
+            let option = validateOnOffOption();
+            let warnings = validateAllwarnings();
 
-            var warning22 = document.getElementById("warning22");
-            //jezeli wybrałem dzień i godzine sprawdz:
-            //czy ustawiono czas
-            var timeend = document.getElementById("timeend").value;
-            if (timeend === "") {
-                warning22.innerText = "Nie wybrano godziny zakończenia sceny";
-                warning22.style.display = "block";
-                time_end_correct = false;
-            } else {
-                warning22.style.display = "none";
-                time_end_correct = true;
-            }
-
-            //czy godzina rozpoczęcia jest mniejsza niż zakończenia
-            if (timeend < time) {
-                warning22.innerText = "Godzina zakończenia nie może być wcześniej niż godzina rozpoczęcia";
-                warning22.style.display = "block";
-                time_end_correct = false;
-            }
-
-            if (time_end_correct === true && time_start_correct === true) {
-                return true;
+            if (name_correct === true && warnings === true && option === true) {
+                new_scene.type = "recznie";
+                new_scene.name = name_value;
+                new_scene.device = devices;
+                sceny.push(new_scene);
+                addToSessionStorage();
+                location.href = 'index.html';
             }
         }
 
-        function validateDays() {
+        if (dzien_godzina.checked) {
+
+            var time_correct = validateHours();
+            //var day_correct = validateDays();
             //jakie wybrano dni tygodnia
-            var count_checked_days = 0;
-            var checked_days = [];
-            var object = {
-                correct: false,
-                days: []
-            }
-
             var days = document.getElementsByName("datepicker");
             for (let i = 0; i < days.length; i++) {
                 if (days[i].checked) {
@@ -669,189 +881,272 @@
             if (count_checked_days === 0) {
                 warning3.innerText = "Wybierz przynajniej jeden dzień";
                 warning3.style.display = "block";
+                day_correct = false;
             } else {
-                object.correct = true;
-                object.days = checked_days;
+                day_correct = true;
                 warning3.style.display = "none";
             }
-            return object;
+
+            validatePlaylist();
+            validate_air_conditioning();
+            let option = validateOnOffOption();
+            let warnings = validateAllwarnings();
+
+            if (name_correct === true && day_correct === true && time_correct === true && warnings === true &&
+                option === true) {
+                var time = document.getElementById("time").value;
+                var timeend = document.getElementById("timeend").value;
+                new_scene.type = "day_and_hour";
+                new_scene.name = name_value;
+                new_scene.timeStart = time;
+                new_scene.timeEnd = timeend;
+                new_scene.days = checked_days;
+                new_scene.device = devices;
+                sceny.push(new_scene);
+                addToSessionStorage();
+                location.href = 'index.html';
+            }
+
+        }
+    }
+
+    function uncheckRadio() {
+        var radio = document.getElementsByClassName('radiobutton');
+        for (let i = 0; i < radio.length; i++) {
+            radio[i].checked = false;
+        }
+    }
+
+    function lampka(name) {
+        let formid = name + '-warning';
+        return `<div class="device" id="${name}">
+        <div>
+            <h2>${name}
+                <i class='far fa-trash-alt' onclick="deleteDevice('${name}')"></i>
+            </h2>
+        </div>
+        <div class="option">
+            <i class='far fa-lightbulb'></i>
+            <form class="radio" onchange="validateOption('${name}', '${formid}')">
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="${formid}"></p>
+        </div>
+    </div>`;
+    }
+
+    function oswietlenie(name){
+        let formid = name + '-warning';
+        return ` <div class="device" id="${name}">
+        <div>
+            <h2>${name}
+                <i class='far fa-trash-alt' onclick="deleteDevice('${name}')"></i>
+            </h2>
+        </div>
+        <div class="option">
+            <i class='far fa-lightbulb'></i>
+            <form  class="radio" onchange="validateOption('oswietlenie', '${formid}')">
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="${formid}"></p>
+
+            <div>
+                <p>Intensywność światła</p>
+                <span>10%</span>
+                <input type="range" id="intensity" name="intensity"
+                       min="10" max="100">
+                <span>100%</span>
+            </div>
+
+            <div class="color-header">
+                <p>Kolor światła</p>
+
+                <div class="colorPicker">
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color1" name="color" checked>
+                        <label id="colora" for="color1"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color2" name="color">
+                        <label id="colorb" for="color2"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color3" name="color">
+                        <label id="colorc" for="color3"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color4" name="color">
+                        <label id="colord" for="color4"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color5" name="color">
+                        <label id="colore" for="color5"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color6" name="color">
+                        <label id="colorf" for="color6"></label>
+                    </div>
+                    <div class="colorPickerOption">
+                        <input type="radio" id="color7" name="color">
+                        <label id="colorg" for="color7"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>`
+    }
+
+    function klimatyzacja(name) {
+        let formid = name + '-warning';
+        let tempid = name + `-temp`;
+        return `<div class="device" id="${name}">
+        <div>
+            <h2>${name}
+                <i class='far fa-trash-alt' onclick="deleteDevice('${name}')"></i>
+            </h2>
+        </div>
+        <div class="option">
+            <i class="fas fa-wind"></i>
+            <form class="radio" onchange="validateOption('${name}', '${formid}')">
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="on"> Włącz
+                </label>
+                <label>
+                    <input class="radiobutton" type="radio" name="${formid}" value="off"> Wyłącz
+                </label>
+            </form>
+            <p class="warning" id="${formid}"></p>
+        </div>
+
+        <div class="temperature">
+            <div class="temp1">
+                <button onclick="decrementValue('${tempid}')"><i class="fas fa-minus"></i></button>
+            </div>
+            <div class="temp2"><h2 id="${tempid}">20 &#x2103</h2></div>
+            <div class="temp1">
+                <button onclick="incrementValue('${tempid}')"><i class="fas fa-plus"></i></button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="power">
+
+            <span>Moc</span>
+            <div class="powerPickerOption">
+                <input type="radio" id="${name + 1}" name="${name + 1}">
+                <label for="${name + 1}"><i id="moc1" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="${name + 2}" name="${name + 1}">
+                <label for="${name + 2}"><i id="moc2" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="${name + 3}" name="${name + 1}">
+                <label for="${name + 3}"><i id="moc3" class="fas fa-fan"></i></label>
+            </div>
+            <div class="powerPickerOption">
+                <input type="radio" id="${name + 4}" name="${name + 1}">
+                <label class="button-auto" for="${name + 4}"><b>AUTO</b></label>
+            </div>
+
+        </div>
+        <div style="clear:both;"></div>
+        <p class="warning" id="${'warning-' + name + '-power'}">Wybierz moc urządzenia</p>
+
+        <div class="color-header">
+            <span>Tryb</span>
+            <select name=${name + '-type'}" id="${name + '-select'}"  class="ui search selection dropdown">
+                <option value="">Przeglądaj</option>
+                <option value="AUTO">AUTO</option>
+                <option value="chłodzenie">Chłodzenie</option>
+                <option value="wentylator">Wentylator</option>
+                <option value="suche">Osuszanie powietrza</option>
+                <option value="Ogrzewanie">Ogrzewanie</option>
+                <option value="eco">ECO</option>
+            </select>
+        </div>
+        <p class="warning" id="${'warning_' + name}">Nie wybrano trybu pracy</p>
+
+    </div>`
+    }
+
+    function updateSelect() {
+
+        let data;
+        let box = document.getElementById('box');
+
+        if (sessionStorage.getItem('AllDevices') == null) {
+            console.log("select pusty");
+            //console.log(data);
+        } else {
+            data = JSON.parse(sessionStorage.getItem('AllDevices'));
+            console.log("select pełny");
+            //console.log(data);
+        }
+        //console.log(data)
+
+        for (let device in data) {
+            let name = data[device].name;
+            let code = data[device].code;
+
+            let formid = name + '-warning';
+            deviceId.push({
+                id: name,
+                formid: formid
+            });
+
+            if (code == 1111) {
+                console.log(box)
+                box.innerHTML += lampka(name);
+                console.log("dodano");
+                console.log(box)
+            }
+            if (code == 2222) {
+                console.log(box)
+                box.innerHTML += klimatyzacja(name);
+                console.log("dodano klima")
+                // let id = `#${name}-select`;
+                // console.log(id);
+                // $(id).dropdown();
+            }
+
+            if (code == 3333) {
+                console.log(box)
+                box.innerHTML += oswietlenie(name);
+                console.log("dodano oswietlenie")
+                // let id = `#${name}-select`;
+                // console.log(id);
+                // $(id).dropdown();
+            }
+
+            let id_select = `akcesoria-select`;
+            let x = document.getElementById(id_select);
+            let option = document.createElement("option");
+            option.text = name;
+            option.value = name;
+            x.add(option);
         }
 
-        function validateAllwarnings() {
+    }
 
-            let d = document.getElementsByClassName("warning");
-            for (let i = 0; i < d.length; i++) {
-                let style = getComputedStyle(d[i])
-                if (style.display === "block") {
-                    return false;
-                }
-            }
-            return true;
-        }
+    window.onload = function () {
+        readSessionStorage();
+        updateSelect();
 
-        document.getElementById("recznie").addEventListener("click", function () {
-            var warning = document.getElementsByClassName("warning");
-            var warning1 = document.getElementById("warning1");
-            let temp;
+    };
 
-            if (warning1.style.display === "block") {
-                temp = true;
-            } else {
-                temp = false;
-            }
-
-            for (let i = 0; i < warning.length; i++) {
-                warning[i].style.display = "none";
-            }
-
-            if (temp) {
-                warning1.style.display = "block";
-            }
-
-            var warning2 = document.getElementById("warning2");
-            warning2.style.display = "none";
-            var warning22 = document.getElementById("warning22");
-            warning22.style.display = "none";
-            var warning3 = document.getElementById("warning3");
-            warning3.style.display = "none";
-        });
-
-
-        function validate() {
-            var new_scene = {};
-            var count_checked_days = 0;
-
-            var checked_days = [];
-
-            var name_correct = true;
-
-            var name = document.getElementById("name");
-            var dzien_godzina = document.getElementById("dzien-godzina");
-            var recznie = document.getElementById("recznie");
-            var warning = document.getElementById("warning1");
-
-            var name_value = name.value;
-            const max_name = 10;
-
-            for (let scena in sceny) {
-                if (sceny[scena].name === name_value) {
-                    warning.innerText = "Scena o takiej nazwie już istnieje zmień nazwę";
-                    warning.style.display = "block";
-                    name_correct = false;
-                } else if (name_value === "") {
-                    warning.innerText = "Nie została podana nazwa sceny";
-                    warning.style.display = "block";
-                    name_correct = false;
-                } else {
-                    if (name_value.length < max_name) {
-                        warning.style.display = "none";
-                        name_correct = true;
-                    } else {
-                        warning.innerText = "Nazwa jest za długa, maksymalna ilość znaków to: " + max_name;
-                        warning.style.display = "block";
-                    }
-                }
-            }
-
-            if (sceny.length === 0) {
-                if (name_value === "") {
-                    warning.innerText = "Nie została podana nazwa sceny";
-                    warning.style.display = "block";
-                    name_correct = false;
-                } else {
-                    if (name_value.length < max_name) {
-                        warning.style.display = "none";
-                        name_correct = true;
-                    } else {
-                        warning.innerText = "Nazwa jest za długa, maksymalna ilość znaków to: " + max_name;
-                        warning.style.display = "block";
-                    }
-                }
-            }
-
-
-            if (recznie.checked) {
-                // var warning2 = document.getElementById("warning2");
-                // warning2.style.display = "none";
-                // var warning22 = document.getElementById("warning22");
-                // warning22.style.display = "none";
-                // var warning3 = document.getElementById("warning3");
-                // warning3.style.display = "none";
-
-                validatePlaylist();
-                validate_air_conditioning();
-                let option = validateOnOffOption();
-                let warnings = validateAllwarnings();
-
-                if (name_correct === true && warnings === true && option === true) {
-                    new_scene.type = "recznie";
-                    new_scene.name = name_value;
-                    new_scene.device = devices;
-                    sceny.push(new_scene);
-                    addToSessionStorage();
-                    location.href = 'index.html';
-                }
-            }
-
-            if (dzien_godzina.checked) {
-
-                var time_correct = validateHours();
-                //var day_correct = validateDays();
-                //jakie wybrano dni tygodnia
-                var days = document.getElementsByName("datepicker");
-                for (let i = 0; i < days.length; i++) {
-                    if (days[i].checked) {
-                        count_checked_days++;
-                        checked_days.push(days[i].value);
-                    }
-                }
-
-                //nie wybrano żadnego dnia
-                var warning3 = document.getElementById("warning3");
-                if (count_checked_days === 0) {
-                    warning3.innerText = "Wybierz przynajniej jeden dzień";
-                    warning3.style.display = "block";
-                    day_correct = false;
-                } else {
-                    day_correct = true;
-                    warning3.style.display = "none";
-                }
-
-                validatePlaylist();
-                validate_air_conditioning();
-                let option = validateOnOffOption();
-                let warnings = validateAllwarnings();
-
-                if (name_correct === true && day_correct === true && time_correct === true && warnings === true &&
-                    option === true) {
-                    var time = document.getElementById("time").value;
-                    var timeend = document.getElementById("timeend").value;
-                    new_scene.type = "day_and_hour";
-                    new_scene.name = name_value;
-                    new_scene.timeStart = time;
-                    new_scene.timeEnd = timeend;
-                    new_scene.days = checked_days;
-                    new_scene.device = devices;
-                    sceny.push(new_scene);
-                    addToSessionStorage();
-                    location.href = 'index.html';
-                }
-
-            }
-        }
-
-        function uncheckRadio() {
-            var radio = document.getElementsByClassName('radiobutton');
-            for (let i = 0; i < radio.length; i++) {
-                radio[i].checked = false;
-            }
-        }
-
-        window.onload = function () {
-            readSessionStorage();
-        };
-    </script>
+</script>
 
 </body>
-
 </html>
