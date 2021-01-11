@@ -166,11 +166,15 @@ legend {
   top: 0;
   position: sticky;
   padding: 20px;
+  font-size: 140%;
 }
 
 .devices {
   min-width: 60%;
   display: flex;
+  align-items: flex-start;
+  align-content: stretch;
+  align-content: flex-start;
   flex-wrap: wrap;
   flex: 58%;
   background-color: lightgray;
@@ -221,8 +225,38 @@ legend {
 }
 
 .temperature button {
-  font-size: 50%;
-  background-color: #333;
+  background: none;
+}
+
+.temp1 {
+  transition: 0.5s;
+  outline: none;
+  float: left;
+  height: 50px;
+}
+
+.temp1 i:hover{
+  color: blue;
+}
+
+.temperature button:focus{
+  outline: none;
+}
+
+.temp2 h2{
+  margin-top: 12px;
+  float: left;
+  width: 150px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.temperature {
+  display: inline;
+  width: 300px;
+}
+.temperature i {
+  color: black;
 }
 
 .device h2 {
@@ -269,9 +303,16 @@ legend {
   transition: 0.5s;
 }
 
+.device_more2 {
+  display: flex;
+  width: 0px;
+  height: 0px;
+  transition: all 0.4s ease-in-out;
+  display: none;
+}
 
 .device_more {
-  /*display: inline-block;*/
+  display: inline;
   width: 0px;
   height: 0px;
   transition: all 0.4s ease-in-out;
@@ -324,20 +365,18 @@ legend {
   font-size: 110%;
 }
 
-.slider_container #myRange2{
+#myRange2 {
   height: 200px;
-  writing-mode: bt-lr; /* IE */
-  -webkit-appearance: slider-vertical; /* WebKit */
+  writing-mode: bt-lr;
+  /* IE */
+  -webkit-appearance: slider-vertical;
+  /* WebKit */
 }
 
 .slider_container #sun {
   font-size: 100%;
 }
 
-#slider_container2{
-  width: 10%;
-  display: inline-block;
-}
 
 .adding {
   width: 100%;
@@ -622,6 +661,7 @@ input:checked+.slider:before {
   cursor: pointer;
 }
 
+
 .text-color {
   transition-duration: .5s;
 }
@@ -666,10 +706,6 @@ input:checked+.slider:before {
 @media only screen and (max-width: 768px) {
   .row {
     flex-direction: column;
-  }
-
-  .sidebar {
-    display: none
   }
 }
 
@@ -835,13 +871,13 @@ figcaption {
 
 .scena-dziala {
   border: 5px solid #42ea00;
-  color: #42ea00;
 }
 
 /*Grupy*/
-.grupa{
+.grupa {
   color: black;
 }
+
 .devices fieldset {
   margin: 2px 5px;
   width: 100%;
@@ -849,12 +885,26 @@ figcaption {
   color: #4b5eac;
 }
 
-.album_container{
-  width: 25%;
+.obrazek {
+  margin-left: 10%;
 }
-.album_container img{
+
+#Slavek {
+  width: 30%;
+  float: right;
+  text-align: center;
+}
+
+.album_container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.album_container img {
+  margin-top: 20px;
   width: 240px;
 }
+
 /*Scroll effect*/
 
 .scroll_container {
@@ -921,7 +971,7 @@ figcaption {
   }
 }
 
-.fa-plus:hover{
+.fa-plus:hover {
   color: #0d64ff;
   transition: 0.3s;
 }

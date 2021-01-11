@@ -13,7 +13,7 @@ var d3 = {
 	"code": "3333",
 }
 
-var codes = ['1111', '2222', '3333'];
+var codes = ['1111', '2222', '3333', '4444'];
 var names = ["Lampka Nocna", "Klimatyzacja", "Głośnik w salonie"];
 var AllDevices = [d1, d2, d3];
 
@@ -89,7 +89,7 @@ function addDevice2(name, code) {
 			'</div>' +
 			'<i id=\"' + name + 'more_button\"' + 'class="fas fa-angle-double-right" onclick="openTab(\'settings_' + name + '\')"></i>' +
 			'<div class="device_more" id="settings_' + name + '\">' +
-			'<i class=\'far fa-trash-alt\' onclick="deleteDevice(\'' + name + '\')"></i>' +
+			'<i class=\'far fa-trash-alt\' onclick= "JSalertDelete(\'' + name + '\')"></i>' +
 			'<i id=\"' + name + 'less_button\"' + 'class=\'fas fa-angle-double-left\' onclick="closeTab(\'settings_' + name + '\')"></i>' +
 			'<div class="slider_container">' +
 			'<i id=\'sun\' class=\'fas fa-sun\'></i>' +
@@ -127,8 +127,18 @@ function addDevice2(name, code) {
 			'<i class=\'far fa-trash-alt\' onclick= "JSalertDelete(\'' + name + '\')"></i>' +
 			'<i id=\"' + name + 'less_button\"' + 'class=\'fas fa-angle-double-left\' onclick="closeTab(\'settings_' + name + '\')"></i>' +
 
-			'<div class="temperature">' +
-			'</div>' +
+
+
+			`<div class="temperature">
+            <div class="temp1">
+                <button onclick="decrementValue('` +name+`-temp')"><i class="fas fa-minus"></i></button>
+            </div>
+            <div class="temp2"><h2 id="` + name +`-temp">20 &#x2103</h2></div>
+            <div class="temp1">
+                <button onclick="incrementValue('` +name+`-temp')"><i class="fas fa-plus"></i></button>
+            </div>
+            <div style="clear:both;"></div>
+        </div>`+
 
 			'<div class="power">' +
 
@@ -172,6 +182,9 @@ function addDevice2(name, code) {
 	if (code == '3333') {
 		console.log("Adding speaker.");
 		document.getElementById('devices').innerHTML += addSpeaker(name);
+	}
+	if (code == '4444') {
+		document.getElementById('devices').innerHTML += addBulb(name);
 	}
 }
 
@@ -298,7 +311,7 @@ function refreshNames(){
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
-	document.getElementById("myDropdown").style.height = "265px";
+	document.getElementById("myDropdown").style.height = "190px";
 	//document.getElementById("myDropdown").style.display = "block";
 }
 
@@ -445,7 +458,7 @@ function wzorScenaManually(id, title){
             <h2>${title}</h2>
             <div class="icon">
                 <i class="far fa-edit" onclick="editScena('${title}')"></i>
-                <i class="far fa-trash-alt" onClick="deleteScene('${id}', '${title}')"></i>
+                <i class="far fa-trash-alt" onClick="JSalertDeleteScena('${id}', '${title}')"></i>
             </div>
             <div class="toggle">
                 <label class="switch">
@@ -463,7 +476,7 @@ function wzorScenaAuto(id, title, daysandhours){
         <h2>${title}</h2>
         <div class="icon">
             <i class="far fa-edit" onclick="editScena('${title}')"></i>
-            <i class="far fa-trash-alt" onClick="deleteScene('${id}', '${title}')"></i>
+            <i class="far fa-trash-alt" onClick="JSalertDeleteScena('${id}', '${title}')"></i>
         </div>
         <div class="days">
             <h3>${daysandhours}</h3>
@@ -564,41 +577,44 @@ function sprawdz_ilosc_domownikow() {
 let domownicy = [2, 3, 4];
 
 function dodajDomownika() {
-
     if (numer_domownika === 4) {
-        alert("Nie można dodać więcej domowników")
+        swal({
+            text: "Nie można dodać więcej domowników.",
+            icon: "warning",
+            dangerMode: true,
+        })
     } else {
-
-    var imie = prompt("Podaj nazwę domownika, którego chcesz dodać");
-    if (imie == null || imie === "") {
-        console.log("Nie podano nazwy domownika")
-    } else {
-        // if (numer_domownika === 4) {
-        //     alert("Nie można dodać więcej domowników")
-        // } else {
-            if (imie.length > 11) {
-                alert("Nazwa domownika za długa")
-            } else {
-                console.log("dodano domownika")
-                numer_domownika++;
-                let n_id = domownicy.shift();
-                let id = "dom" + n_id;
-                document.getElementById(id).querySelector("figcaption").innerText = imie;
-                document.getElementById(id).style.display = "block";
-            }
-        }
-
+        swal("Podaj nazwę domownika, którego chcesz dodać", {
+            content: "input",
+        })
+            .then((value) => {
+                if (value == null || value === "") {
+                    swal({text: `Nie podano nazwy domownika`,
+                    icon: "error"
+                    });
+                }else if (value.length > 11) {
+                    swal({
+                        text: `Nazwa domownika za długa`,
+                        icon: "error"
+                    });
+                } else {
+                    console.log("dodano domownika")
+                    numer_domownika++;
+                    let n_id = domownicy.shift();
+                    let id = "dom" + n_id;
+                    document.getElementById(id).querySelector("figcaption").innerText = value;
+                    document.getElementById(id).style.display = "block";
+                }
+            });
     }
     sprawdz_ilosc_domownikow();
 }
 
 function usunDomownika(id) {
-    if (confirm("Czy chcesz usunąć domownika?")) {
         document.getElementById(id).style.display = "none";
         numer_domownika--;
         id = id.slice(3, 4);
         domownicy.push(parseInt(id));
-    }
     sprawdz_ilosc_domownikow();
 }
 
@@ -727,37 +743,143 @@ function addSpeaker(name) {
 		<!--Ikona-->
 		<i id='speaker' class='fas fa-music'></i>
 		<label class="switch">
-			<input type="checkbox">' +
-			<span class="slider round"></span>' +
+			<input type="checkbox">
+			<span class="slider round"></span>
 		</label>
 	</div>
 
 	<i id="` + name + `more_button" class="fas fa-angle-double-right" onclick="openTab('settings_` + name + `')"></i>
 	
 	<!--Ustawienia-->
-	<div class="device_more" id="settings_` + name + `">
+	<div class="device_more2" id="settings_` + name + `">
 		<!--Usuwanie-->
-		<i class='far fa-trash-alt' onclick="deleteDevice('` + name + `')"></i>
+		<i class='far fa-trash-alt' onclick= "JSalertDelete('` + name + `')"></i>
 		<i id="` + name + `less_button" class='fas fa-angle-double-left' onclick="closeTab('settings_` + name + `')"></i>
 		<!--Usuwanie-->
 
 		<!--Ustawienia DALEJ-->
 
+
 		<div class="album_container">
-		<img src="images/slawomir.jpg">
-		<div class="slider_container" id="slider_container2">
-		<label for="myRange2"> Głośność</label>
-			<input orient="vertical" type="range" min="0" max="100" value="50" class="slider_x" id="myRange2" oninput="this.nextElementSibling.value=this.value">
+		<div id = "Slavek">
+		<label for="myRange"> Głośność</label>
+			<input type="range" min="0" max="100" value="50" class="slider_x" id="myRange" oninput="this.nextElementSibling.value=this.value">
 			<output>50</output>
 			<br>
+			</div>
+		<div class="obrazek">
+		<img src="images/slawomir.jpg">
+		<br>
+		<i class='fas fa-fast-backward'></i>
+		<i class='fas fa-play'></i>
+		<i class='fas fa-fast-forward'></i>
 		</div>
 		</div>
-
 
 		<span>Akutalnie odtwarzany utwór: </span>
 		<div class="scroll_container">
 		<p>Sławomir - Miłość w Zakopanem </p>
 		</div>
+
+
 	</div>`
 	return result;
+}
+
+function addBulb(name) {
+	var result = '<div name=\"' + name + '\" + id=\"' + name + '\" class="device">'+
+			'<h2>' + name + '</h2>'+
+			'<div class="turn">'+
+			'<i id=\'bulb\' class=\'far fa-lightbulb\'></i>'+
+			'<label class=\"switch\">'+
+			'<input type="checkbox">'+
+			'<span class="slider round"></span>'+
+			'</label>'+
+			'</div>'+
+			'<i id=\"' + name + 'more_button\"' + 'class="fas fa-angle-double-right" onclick="openTab(\'settings_' + name + '\')"></i>'+
+			'<div class="device_more" id="settings_' + name + '\">'+
+			'<i class=\'far fa-trash-alt\' onclick= "JSalertDelete(\'' + name + '\')"></i>'+
+			'<i id=\"' + name + 'less_button\"' + 'class=\'fas fa-angle-double-left\' onclick="closeTab(\'settings_' + name + '\')"></i>'+
+			'</div>'
+			return result;
+}
+
+function JSalertDeleteScena(id, name) {
+    swal({
+        title: "Jesteś pewny?",
+        text: "Nie będzie można przywrócić usuniętej sceny!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Scena " + name + " została usunięta!", {
+                    icon: "success",
+                });
+                deleteDevice(id, name)
+            } else {
+                swal("Scena " + name + " nie została usunięta!");
+            }
+        });
+}
+function JSalertDeleteDomownik(id) {
+    swal({
+        title: "Jesteś pewny?",
+        text: "Czy chcesz usunąć domownika?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                usunDomownika(id)
+            } else {
+            }
+        });
+}
+function deleteGroup() {
+    swal("Podaj nazwę grupy do usunięcia", {
+        content: "input",
+    })
+        .then((value) => {
+            let name = sessionStorage.getItem("Grupa");
+            if (value == null || value === "") {
+                swal(`Nie podano nazwy grupy`);
+            }else if (value === name) {
+                swal({
+                    text: "Czy chcesz usunąć grupę " + value + " ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = 'index.html';
+                        }
+                    });
+            } else {
+                swal(`Grupa o takiej nazwie nie istnieje`);
+            }
+        });
+}
+
+function incrementValue(id) {
+	var value = document.getElementById(id).firstChild.nodeValue;
+	value = value.split(" ");
+	var new_value = parseInt(value[0]);
+	new_value = isNaN(new_value) ? 0 : new_value;
+	new_value++;
+	document.getElementById(id).innerHTML = new_value + " " + value[1];
+	//document.getElementById('number').value = value;
+}
+
+function decrementValue(id) {
+	var value = document.getElementById(id).firstChild.nodeValue;
+	value = value.split(" ");
+	var new_value = parseInt(value[0]);
+	new_value = isNaN(new_value) ? 0 : new_value;
+	new_value--;
+	document.getElementById(id).innerHTML = new_value + " " + value[1];
+	//document.getElementById('number').value = value;
 }
