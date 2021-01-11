@@ -199,10 +199,6 @@ function refreshDevices() {
 	for (var i in data) {
 		addDevice2(data[i].name, data[i].code);
 	}
-	console.log("ILE: " + data.length)
-	if (data.length == 0){
-		document.getElementById('devices').innerHTML = "<h4> Brak dodanych urządzeń </h4>"
-	}
 	refreshNames();
 }
 
@@ -251,7 +247,12 @@ function deleteDevice(id) {
 	deleteDevice2(id);
 	deleteName(id)
 	refreshNames();
-	refreshDevices();
+	var data = JSON.parse(sessionStorage.getItem("AllDevices"));
+	console.log("ILE: " + data.length)
+	if (data.length == 0){
+		document.getElementById('devices').innerHTML = "<h4> Brak dodanych urządzeń </h4>"
+	}
+	//refreshDevices();
 }
 
 function openTab(tabName) {
