@@ -529,15 +529,6 @@ function deleteDevice(id, title) {
     }
 }
 
-
-window.transitionToPage = function (href) {
-	document.querySelector('body').style.opacity = 0
-	setTimeout(function () {
-		window.location.href = href
-	}, 500)
-}
-
-
 function deleteGroup() {
 	swal("Podaj nazwę grupy do usunięcia", {
 	   content: "input",
@@ -687,12 +678,12 @@ function animateWorkingScena(){
 }
 
 window.onload = function () {
-	//refreshDevices();
+	refreshDevices();
     console.log("Refreshing data....");
     readSessionStorage();
     updateSceny();
     sprawdz_ilosc_scen();
-   // updateSelectWithDevicesInSceny();
+    updateSelectWithDevicesInSceny();
     animateWorkingScena();
 
     let nazwa = sessionStorage.getItem("Grupa");
